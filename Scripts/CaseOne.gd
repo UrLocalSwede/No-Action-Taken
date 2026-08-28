@@ -35,18 +35,44 @@ func _ready():
 	
 	hint_text.z_index = -1
 	
+	display_case()
+	
+func check_progress():
+	return
+
 func display_case():
-	var c = cases[index]
-	post_text.text = c["post"]
-	report_reason.text = "REPORTED FOR    " + c["reason"]
-	account_info.text = "ACCOUNT         " + c["account"]
-	case_header.text = "CASE %02d / %02d" % [index + 1, cases.size()]
+	if index < cases.size():
+		var c = cases[index]
+		post_text.text = c["post"]
+		report_reason.text = "REPORTED FOR    " + c["reason"]
+		account_info.text = "ACCOUNT         " + c["account"]
+		case_header.text = "CASE %02d / %02d" % [index + 1, cases.size()]
+	else:
+		return
+	
+	
+func submit_verdict(text):
+	command_input.clear()
+	add_history(text)
+	var verb = text.strip_edges().to_lower()
+	if verb == "remove" or verb == "noaction":
+		correction(verb)
+	else:
+		hint()
+		
+func correction(verb):
+	if verb == cases[index]["correct"]:
+		add_history(verb + " - Post removed")
+		index += 1
+		display_case()
+	else:
+		add_history(verb + " - CITATION")
+	
+# Features
 	
 func hint():
 	hint_text.z_index = 1
 	hint_text.text = "Unrecognized command; Try using 'Remove' or 'No Action'"
-
-
 
 func add_history(line: String):
 	history_lines.append("> " + line)
@@ -54,16 +80,6 @@ func add_history(line: String):
 		history_lines.pop_front()
 	history_text.text = "\n".join(history_lines)
 
-func submit_verdict(text):
-	command_input.clear()
-	add_history(text)
-	var verb = text.strip_edges().to_lower()
-	if verb == "remove" or verb == "noaction":
-		if verb == correct:
-			print("correct")
-		else:
-			print("not correct")
-	else:
-		hint()
+
 		
 		
