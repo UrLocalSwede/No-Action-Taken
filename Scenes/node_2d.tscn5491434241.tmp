@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://c4pib8hlrxg4y"]
+
+[ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_j2wod"]
+[ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/CaseOne.gd" id="2_v1qfn"]
+
+[node name="CaseReview" type="Control" unique_id=1568099388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_v1qfn")
+
+[node name="Root" type="MarginContainer" parent="." unique_id=2134329188]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_j2wod")
+
+[node name="Columns" type="HSplitContainer" parent="Root" unique_id=222138840]
+layout_mode = 2
+
+[node name="QueuePanel" type="PanelContainer" parent="Root/Columns" unique_id=328885823]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/Columns/QueuePanel" unique_id=1537745984]
+layout_mode = 2
+
+[node name="CaseHeader" type="Label" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=771691039]
+layout_mode = 2
+text = "Case"
+
+[node name="PostText" type="RichTextLabel" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=1549307160]
+layout_mode = 2
+text = "Information about case"
+fit_content = true
+
+[node name="ReportReason" type="Label" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=1164934004]
+layout_mode = 2
+text = "Report Reason"
+
+[node name="AccountInfo" type="Label" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=2027729667]
+layout_mode = 2
+text = "Account Info"
+
+[node name="CommandInput" type="LineEdit" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=1547665790]
+layout_mode = 2
+
+[node name="HintLabel" type="Label" parent="Root/Columns/QueuePanel/VBoxContainer" unique_id=26338398]
+layout_mode = 2
+text = "Hint Label"
+
+[node name="RulebookPanel" type="PanelContainer" parent="Root/Columns" unique_id=1935596219]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Root/Columns/RulebookPanel" unique_id=563803296]
+layout_mode = 2
+
+[node name="RuleText" type="RichTextLabel" parent="Root/Columns/RulebookPanel/ScrollContainer" unique_id=1225792062]
+layout_mode = 2
+bbcode_enabled = true
+text = "**§1 — Threats**
+> Remove any post that threatens violence against a specific person.
+>
+> **§2 — Personal information**
+> Remove any post that publishes a private individual's home address, phone number, or workplace."
+fit_content = true
+autowrap_mode = 0
