@@ -8,26 +8,13 @@ extends Control
 @onready var account_info = $Margin/Columns/QueuePanel/VBoxContainer/AccountInfo
 @onready var case_header = $Margin/Columns/QueuePanel/VBoxContainer/CaseHeader
 
-var correct = "remove"
 var history_lines: Array[String] = []
-
-var cases = [
-	{
-		"post": "if I ever see @danfielding at the depot again I will put him in the ground. this is not a joke.",
-		"reason": "Threats",
-		"account": "4 years, 0 warnings",
-		"correct": "remove"
-	},
-	{
-		"post": "Anyone know a good place for tires on the north side? Getting quoted way too much.",
-		"reason": "Personal information",
-		"account": "8 months, 0 warnings",
-		"correct": "noaction"
-	},
-]
-
 var index = 0
 var citations = 0
+var shift_number = 1
+var shift = CaseData.SHIFTS[shift_number]
+var cases = shift["cases"]
+var typing_tween: Tween
 
 func _ready():
 	command_input.text_submitted.connect(submit_verdict)
@@ -43,12 +30,12 @@ func check_progress():
 func display_case():
 	if index < cases.size():
 		var c = cases[index]
-		post_text.text = c["post"]
+		type_text(post_text, c["post"]) 
 		report_reason.text = "REPORTED FOR    " + c["reason"]
 		account_info.text = "ACCOUNT         " + c["account"]
 		case_header.text = "CASE %02d / %02d" % [index + 1, cases.size()]
 	else:
-		return
+		end_shift()
 	
 	
 func submit_verdict(text):
@@ -62,11 +49,32 @@ func submit_verdict(text):
 		
 func correction(verb):
 	if verb == cases[index]["correct"]:
-		add_history(verb + " - Post removed")
+		if cases[index]["correct"] == "remove":
+			add_history(verb + " - Post removed")
+		else:
+			add_history(verb + " - Post cleared")
 		index += 1
 		display_case()
 	else:
 		add_history(verb + " - CITATION")
+		citations += 1
+		
+func end_shift():
+	case_header.text = "SHIFT COMPLETE"
+	report_reason.text = ""
+	account_info.text = ""
+	
+	var total = cases.size()
+	var accuracy = int(float(total - citations) / total * 100)
+	
+	var summary = "CASES PROCESSED    %d / %d\n" % [total, total]
+	summary += "CITATIONS          %d\n" % citations
+	summary += "ACCURACY           %d%%\n\n" % accuracy
+	summary += "Thank you. Please return tomorrow at 22:00."
+	
+	type_text(post_text, summary)
+	command_input.editable = false
+	command_input.placeholder_text = ""
 	
 # Features
 	
@@ -80,6 +88,13 @@ func add_history(line: String):
 		history_lines.pop_front()
 	history_text.text = "\n".join(history_lines)
 
-
+func type_text(label, content):
+	if typing_tween:
+		typing_tween.kill()
+	label.text = content
+	label.visible_ratio = 0.0
+	var duration = content.length() * 0.02
+	typing_tween = create_tween()
+	typing_tween.tween_property(label, "visible_ratio", 1.0, duration)
 		
 		

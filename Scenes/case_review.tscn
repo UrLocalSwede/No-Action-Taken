@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c4pib8hlrxg4y"]
 
 [ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_8cvbq"]
-[ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/CaseOne.gd" id="2_o617t"]
+[ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/caseHandler.gd" id="2_o617t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cvbq"]
 content_margin_bottom = 8.0
