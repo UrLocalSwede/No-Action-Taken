@@ -7,6 +7,7 @@ extends Control
 @onready var history_text = $Margin/Columns/QueuePanel/VBoxContainer/CommandHistory/HistoryText
 @onready var account_info = $Margin/Columns/QueuePanel/VBoxContainer/AccountInfo
 @onready var case_header = $Margin/Columns/QueuePanel/VBoxContainer/CaseHeader
+@onready var rule_text = $Margin/Columns/RulebookPanel/RuleText
 
 var history_lines: Array[String] = []
 var index = 0
@@ -14,6 +15,7 @@ var citations = 0
 var shift_number = 1
 var shift = CaseData.SHIFTS[shift_number]
 var cases = shift["cases"]
+var rules = shift["rules"]
 var typing_tween: Tween
 
 func _ready():
@@ -23,6 +25,7 @@ func _ready():
 	hint_text.z_index = -1
 	
 	display_case()
+	display_rules()
 	
 func check_progress():
 	return
@@ -36,12 +39,18 @@ func display_case():
 		case_header.text = "CASE %02d / %02d" % [index + 1, cases.size()]
 	else:
 		end_shift()
+		
+func display_rules():
+	var text = ""
+	for rule in shift["rules"]:
+		text += "§%d — %s\n" % [rule["id"], rule["title"]]
+		text += rule["text"] + "\n\n"
+	type_text(rule_text, text)
 	
-	
-func submit_verdict(text):
+func submit_verdict(text): 
 	command_input.clear()
 	add_history(text)
-	var verb = text.strip_edges().to_lower()
+	var verb = text.strip_edges().to_lower().replace(" ", "")
 	if verb == "remove" or verb == "noaction":
 		correction(verb)
 	else:
@@ -88,13 +97,32 @@ func add_history(line: String):
 		history_lines.pop_front()
 	history_text.text = "\n".join(history_lines)
 
-func type_text(label, content):
-	if typing_tween:
-		typing_tween.kill()
+func type_text(label, content, speed := 0.02):
 	label.text = content
 	label.visible_ratio = 0.0
-	var duration = content.length() * 0.02
-	typing_tween = create_tween()
-	typing_tween.tween_property(label, "visible_ratio", 1.0, duration)
+	var total = content.length()
+	var shown = 0
+	
+	while shown < total:
+		shown += 1
+		label.visible_ratio = float(shown) / total
+		
+		var delay = speed
+		var ch = content[shown -1]
+		
+		if ch in [".", "!", "?"]:
+			delay = speed * 12
+		elif ch in [",", ";", ":"]:
+			delay = speed * 6
+		elif randf() < 0.04:
+			delay = speed * randf_range(4.0, 9.0)
+		else:
+			delay = speed * randf_range(0.6, 1.5)
+		
+		await get_tree().create_timer(delay).timeout
+		
+		
+		
+		
 		
 		

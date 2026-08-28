@@ -1,6 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://dahkg824btrlo"]
 
+[ext_resource type="StyleBox" uid="uid://he2ogs8x01sj" path="res://Assets/Themes/button_styleboxflat.tres" id="1_7o5yc"]
 [ext_resource type="FontFile" uid="uid://c7kxftwx4ma3k" path="res://Assets/Fonts/IBMPlexMono-Regular.ttf" id="1_xxred"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huj65"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxred"]
 content_margin_left = 24.0
@@ -14,4 +17,9 @@ border_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
 [resource]
 default_font = ExtResource("1_xxred")
 default_font_size = 16
+Button/styles/disabled = null
+Button/styles/focus = ExtResource("1_7o5yc")
+Button/styles/hover = ExtResource("1_7o5yc")
+Button/styles/normal = SubResource("StyleBoxEmpty_huj65")
+Button/styles/pressed = ExtResource("1_7o5yc")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_xxred")

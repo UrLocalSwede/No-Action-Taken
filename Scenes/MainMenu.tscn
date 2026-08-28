@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://5vhoft8fk7gc"]
+
+[ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_853f1"]
+[ext_resource type="Script" uid="uid://c7a641oohgw2l" path="res://Scripts/main_menu.gd" id="2_8saeu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_853f1"]
+font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_8saeu"]
+font_color = Color(0.32915837, 0.3291584, 0.3291584, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ghw46"]
+font_size = 13
+font_color = Color(0.40832946, 0.40832946, 0.40832946, 1)
+
+[node name="Control" type="Control" unique_id=1440411447]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_853f1")
+script = ExtResource("2_8saeu")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=277366298]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer" unique_id=952357330]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer" unique_id=643012872]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=557166308]
+layout_mode = 2
+text = "NO ACTION TAKEN"
+label_settings = SubResource("LabelSettings_853f1")
+uppercase = true
+
+[node name="Version" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=1712653759]
+layout_mode = 2
+text = "moderation console - build 0.1.1"
+label_settings = SubResource("LabelSettings_8saeu")
+uppercase = true
+
+[node name="Spacer" type="Control" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=1678494341]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=1662010594]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BEGIN SHIFT"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=1850844707]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "EXIT"
+alignment = 0
+
+[node name="Spacer2" type="Control" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=880366940]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=1670966680]
+layout_mode = 2
+text = "CONNECTION SECURE"
+label_settings = SubResource("LabelSettings_ghw46")
+uppercase = true

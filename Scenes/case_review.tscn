@@ -97,10 +97,5 @@ size_flags_stretch_ratio = 2.0
 [node name="RuleText" type="RichTextLabel" parent="Margin/Columns/RulebookPanel" unique_id=1225792062]
 layout_mode = 2
 bbcode_enabled = true
-text = "[b]§1 — Threats[/b]
-Remove any post that threatens violence against a specific person.
-
-[b]§2 — Personal information[/b]
-Remove any post that publishes a private individual's home address, phone number, or workplace."
 fit_content = true
 autowrap_mode = 2
