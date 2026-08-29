@@ -26,7 +26,10 @@ const SHIFTS = {
 				"account": "4 years, 0 warnings",
 				"correct": "remove",
 				"rule": 1,
-				"flag": ""
+				"flag": "",
+				"messages_before": ["New here? Okay so. The policy's on your right, and that's the whole job; you read the post, you check it against what's written there, and you decide. That's it. The thing nobody tells you is that most of what gets reported doesn't actually break anything. People report stuff they're annoyed by. You'll see a lot of that."],
+				"messages_after_correct": ["Good. You're a natural"],
+				"messages_after_wrong": ["Oh uh, try to read it more carfully"]
 			},
 			{
 				"post": "Anyone know a good place for tires on the north side? Getting quoted way too much.",
@@ -34,7 +37,10 @@ const SHIFTS = {
 				"account": "8 months, 0 warnings",
 				"correct": "noaction",
 				"rule": 0,
-				"flag": ""
+				"flag": "",
+				"messages_before": [],
+				"messages_after_correct": [],
+				"messages_after_wrong": []
 			},
 			{
 				"post": "my ex is a piece of shit and everyone should know it. worst human being alive. hope his life falls apart.",
@@ -42,7 +48,10 @@ const SHIFTS = {
 				"account": "2 years, 1 prior warning",
 				"correct": "noaction",
 				"rule": 0,
-				"flag": ""
+				"flag": "",
+				"messages_before": [],
+				"messages_after_correct": [],
+				"messages_after_wrong": []
 			},
 			{
 				"post": "Reminder that Karen Vasquez works at the Riverside branch, weekdays, and she's the one who denied my claim. Just so everyone knows where to find her.",
@@ -50,7 +59,10 @@ const SHIFTS = {
 				"account": "3 weeks, 0 warnings",
 				"correct": "remove",
 				"rule": 2,
-				"flag": ""
+				"flag": "",
+				"messages_before": [],
+				"messages_after_correct": [],
+				"messages_after_wrong": []
 			},
 			{
 				"post": "Attaching the address of the man who's been sending my daughter messages. Police have it and did nothing. He lives at 14 Copse Lane. I'm not telling anyone to do anything, I just want parents on this street to know.",
@@ -58,7 +70,10 @@ const SHIFTS = {
 				"account": "6 years, 0 warnings",
 				"correct": "remove",
 				"rule": 2,
-				"flag": "copse_lane"
+				"flag": "copse_lane",
+				"messages_before": [],
+				"messages_after_correct": [],
+				"messages_after_wrong": []
 			},
 			{
 				"post": "Third night in a row I can't sleep. Does anyone else just sit up and watch the ceiling.",
@@ -66,7 +81,10 @@ const SHIFTS = {
 				"account": "1 year, 0 warnings",
 				"correct": "noaction",
 				"rule": 0,
-				"flag": ""
+				"flag": "",
+				"messages_before": [],
+				"messages_after_correct": [],
+				"messages_after_wrong": []
 			},
 		]
 	},
@@ -102,7 +120,10 @@ const SHIFTS = {
 				"account": "",
 				"correct": "",
 				"rule": 0,
-				"flag": ""
+				"flag": "",
+				"messages_before": [""],
+				"messages_after_correct": [""],
+				"messages_after_wrong": [""]
 			},
 		]
 	},
