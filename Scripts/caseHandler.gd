@@ -9,6 +9,7 @@ extends Control
 @onready var case_header = $Margin/Columns/QueuePanel/VBoxContainer/CaseHeader
 @onready var rule_text = $Margin/Columns/RulebookPanel/VBoxContainer/RuleText
 @onready var chat_box = $Margin/Columns/RulebookPanel/VBoxContainer/ChatBox
+@onready var ghost_label = $Margin/Columns/QueuePanel/VBoxContainer/CommandHistory/ghostLabel
 
 # -- Values that should not be changed --
 var history_lines: Array[String] = []
@@ -24,10 +25,13 @@ var rules = shift["rules"]
 var now = Time.get_time_dict_from_system()
 var stamp = "%02d:%02d" % [now["hour"], now["minute"]]
 
+const COMMANDS = ["remove", "noaction"]
+
 
 #-- Runs on scene start --
 func _ready():
 	command_input.text_submitted.connect(submit_verdict)
+	command_input.text_changed.connect(_on_text_changed)
 	command_input.grab_focus()
 	chat_box.text = ""
 	
@@ -35,6 +39,10 @@ func _ready():
 	
 	display_case()
 	display_rules()
+	
+	var sb = command_input.get_theme_stylebox("normal")
+	ghost_label.position.x = sb.content_margin_left
+	ghost_label.position.y = sb.content_margin_top
 	
 # -- Handles what case the user is on --
 func display_case():
@@ -49,7 +57,6 @@ func display_case():
 		for msg in c["messages_before"]:
 			await append_typed(chat_box, "\n\nTeo  %s\n%s" % [stamp, msg])
 			await get_tree().create_timer(1.2).timeout
-			print("before")
 	else:
 		end_shift()
 		
@@ -86,7 +93,6 @@ func correction(verb):
 		for msg in c["messages_after_correct"]:
 			await append_typed(chat_box, "\n\nTeo  %s\n%s" % [stamp, msg])
 			await get_tree().create_timer(1.2).timeout
-			print("correct")
 	else:
 		add_history(verb + " - CITATION")
 		citations += 1
@@ -96,7 +102,6 @@ func correction(verb):
 		for msg in c["messages_after_wrong"]:
 			await append_typed(chat_box, "\n\nTeo  %s\n%s" % [stamp, msg])
 			await get_tree().create_timer(1.2).timeout
-			print("wrong")
 
 #-- Cycles shifts -- 
 func end_shift():
@@ -116,6 +121,24 @@ func end_shift():
 	command_input.editable = false
 	command_input.placeholder_text = ""
 	
+#-- Handle autocomplete ghost text --
+func _on_text_changed(new_text):
+	var typed = new_text.to_lower()
+	ghost_label.text = ""
+	if typed == "":
+		return
+	for cmd in COMMANDS:
+		if cmd.begins_with(typed):
+			ghost_label.text = cmd
+			break
+			
+#-- Handle autocomplete on tab
+func _input(event):
+	if event.is_action_pressed("ui_focus_next") and ghost_label.text != "":
+		command_input.text = ghost_label.text
+		command_input.caret_column = command_input.text.length()
+		ghost_label.text = ""
+		get_viewport().set_input_as_handled()
 
 #-- Hints towards valid commands --	
 func hint():
