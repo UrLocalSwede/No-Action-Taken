@@ -78,7 +78,7 @@ vertical_alignment = 2
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="ghostLabel" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer/CommandHistory" unique_id=45841521]
+[node name="ghostLabel" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=45841521]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2901961, 0.32941177, 0.2901961, 1)
 vertical_alignment = 1

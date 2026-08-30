@@ -27,8 +27,8 @@ const SHIFTS = {
 				"correct": "remove",
 				"rule": 1,
 				"flag": "",
-				"messages_before": ["New here? Okay so. The policy's on your right, and that's the whole job; you read the post, you check it against what's written there, and you decide. That's it. The thing nobody tells you is that most of what gets reported doesn't actually break anything. People report stuff they're annoyed by. You'll see a lot of that."],
-				"messages_after_correct": ["Good. You're a natural"],
+				"messages_before": ["New here? Okay so. The policy's on your right, and that's the whole job; you read the post, you check it against what's written there, and you decide weather to remove the post with 'remove' or keep it with 'noaction'. That's it. The thing nobody tells you is that most of what gets reported doesn't actually break anything. People report stuff they're annoyed by. You'll see a lot of that."],
+				"messages_after_correct": ["Good. You're a natural. Also if you wanna go back to the main menu use the command 'exit'"],
 				"messages_after_wrong": ["Oh uh, try to read it more carfully"]
 			},
 			{
