@@ -1,15 +1,15 @@
 extends Control
 
-@onready var post_text = $Margin/Columns/QueuePanel/VBoxContainer/PostText
-@onready var command_input = $Margin/Columns/QueuePanel/VBoxContainer/CommandInput
-@onready var report_reason = $Margin/Columns/QueuePanel/VBoxContainer/ReportReason
-@onready var hint_text = $Margin/Columns/QueuePanel/VBoxContainer/HintLabel
-@onready var history_text = $Margin/Columns/QueuePanel/VBoxContainer/CommandHistory/HistoryText
-@onready var account_info = $Margin/Columns/QueuePanel/VBoxContainer/AccountInfo
-@onready var case_header = $Margin/Columns/QueuePanel/VBoxContainer/CaseHeader
-@onready var rule_text = $Margin/Columns/RulebookPanel/VBoxContainer/RuleText
-@onready var chat_box = $Margin/Columns/RulebookPanel/VBoxContainer/ChatBox
-@onready var ghost_label = $Margin/Columns/QueuePanel/VBoxContainer/ghostLabel
+@onready var post_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/PostText
+@onready var command_input = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/CommandInput
+@onready var report_reason = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/ReportReason
+@onready var hint_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/HintLabel
+@onready var history_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/HistoryText
+@onready var account_info = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/AccountInfo
+@onready var case_header = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/CaseHeader
+@onready var rule_text = $Windows/RulebookWindow/VBoxContainer/RuleText
+@onready var chat_box = $Windows/ChatWindow/VBoxContainer/ChatBox
+@onready var ghost_label = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/ghostLabel
 
 # -- Values that should not be changed --
 var history_lines: Array[String] = []
@@ -152,7 +152,7 @@ func hint():
 #-- Handles command history --
 func add_history(line: String):
 	history_lines.append("> " + line)
-	if history_lines.size() > 12:
+	if history_lines.size() > 8:
 		history_lines.pop_front()
 	history_text.text = "\n".join(history_lines)
 

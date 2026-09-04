@@ -2,10 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_8cvbq"]
 [ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/caseHandler.gd" id="2_o617t"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cvbq"]
-content_margin_bottom = 8.0
-bg_color = Color(0.078431375, 0.09411765, 0.101960786, 1)
+[ext_resource type="Texture2D" uid="uid://dmeigulbojw7c" path="res://Assets/Backgrounds/black-cat-cowboy-in-desert-sunset-nv-3440x1440.jpg" id="3_oewqx"]
+[ext_resource type="StyleBox" uid="uid://b0h77l7pghukc" path="res://Assets/Themes/windows_style_box_flat.tres" id="4_3hd7y"]
+[ext_resource type="Script" uid="uid://7tsvwi53bc5" path="res://Scripts/draggable_window.gd" id="5_3hd7y"]
 
 [node name="CaseReview" type="Control" unique_id=1568099388]
 layout_mode = 3
@@ -17,7 +16,17 @@ grow_vertical = 2
 theme = ExtResource("1_8cvbq")
 script = ExtResource("2_o617t")
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=2134329188]
+[node name="Wallpaper" type="TextureRect" parent="." unique_id=193146685]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_oewqx")
+stretch_mode = 3
+
+[node name="Windows" type="Control" parent="." unique_id=1398093098]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,51 +34,73 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Columns" type="HBoxContainer" parent="Margin" unique_id=1981059027]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="QueuePanel" type="PanelContainer" parent="Margin/Columns" unique_id=328885823]
-layout_mode = 2
+[node name="QueueWindow" type="Panel" parent="Windows" unique_id=447956893]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 600.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = ExtResource("4_3hd7y")
+script = ExtResource("5_3hd7y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/Columns/QueuePanel" unique_id=1537745984]
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow" unique_id=1537745984]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/QueueWindow/VBoxContainer" unique_id=319874189]
 layout_mode = 2
 
-[node name="CaseHeader" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=771691039]
+[node name="Label" type="Label" parent="Windows/QueueWindow/VBoxContainer/Titlebar" unique_id=1039383466]
+layout_mode = 2
+text = "Review Queue"
+
+[node name="MarginContainer" type="MarginContainer" parent="Windows/QueueWindow/VBoxContainer" unique_id=999317487]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow/VBoxContainer/MarginContainer" unique_id=2121408754]
+layout_mode = 2
+
+[node name="CaseHeader" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=771691039]
 layout_mode = 2
 text = "Case"
 
-[node name="PostText" type="RichTextLabel" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=1549307160]
+[node name="PostText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1549307160]
 layout_mode = 2
 theme_override_constants/line_separation = 8
 theme_override_font_sizes/normal_font_size = 18
 text = "Information about case"
 fit_content = true
 
-[node name="ReportReason" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=1164934004]
+[node name="ReportReason" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1164934004]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
 theme_override_font_sizes/font_size = 14
 text = "Report Reason"
 
-[node name="AccountInfo" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=2027729667]
+[node name="AccountInfo" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=2027729667]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
 theme_override_font_sizes/font_size = 14
 text = "Account Info"
 
-[node name="Spacer" type="Control" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=2124619366]
+[node name="Spacer" type="Control" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=2124619366]
+custom_minimum_size = Vector2(0, 350)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CommandHistory" type="PanelContainer" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=714715822]
+[node name="HistoryText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1485474728]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8cvbq")
-
-[node name="HistoryText" type="RichTextLabel" parent="Margin/Columns/QueuePanel/VBoxContainer/CommandHistory" unique_id=1485474728]
-layout_mode = 2
+size_flags_vertical = 3
 focus_mode = 2
 fit_content = true
 scroll_following = true
@@ -78,40 +109,92 @@ vertical_alignment = 2
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="ghostLabel" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=45841521]
+[node name="ghostLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=45841521]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.2901961, 0.32941177, 0.2901961, 1)
 vertical_alignment = 1
 
-[node name="CommandInput" type="LineEdit" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=1547665790]
+[node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1547665790]
 layout_mode = 2
+size_flags_vertical = 10
 theme_override_constants/caret_width = 4
 keep_editing_on_text_submit = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="HintLabel" type="Label" parent="Margin/Columns/QueuePanel/VBoxContainer" unique_id=26338398]
+[node name="HintLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=26338398]
 layout_mode = 2
+size_flags_vertical = 8
 text = "Hint Label"
 
-[node name="Panel" type="Panel" parent="Margin/Columns" unique_id=1340420572]
-custom_minimum_size = Vector2(2, 0)
-layout_mode = 2
-
-[node name="RulebookPanel" type="PanelContainer" parent="Margin/Columns" unique_id=1935596219]
-layout_mode = 2
+[node name="RulebookWindow" type="Panel" parent="Windows" unique_id=1676816300]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 660.0
+offset_top = 40.0
+offset_right = 970.0
+offset_bottom = 500.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = ExtResource("4_3hd7y")
+script = ExtResource("5_3hd7y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/Columns/RulebookPanel" unique_id=657872387]
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/RulebookWindow" unique_id=1788816905]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/RulebookWindow/VBoxContainer" unique_id=297030376]
 layout_mode = 2
 
-[node name="ChatBox" type="RichTextLabel" parent="Margin/Columns/RulebookPanel/VBoxContainer" unique_id=1223868664]
+[node name="Label" type="Label" parent="Windows/RulebookWindow/VBoxContainer/Titlebar" unique_id=281517989]
+layout_mode = 2
+mouse_filter = 1
+text = "Rule Book"
+
+[node name="RuleText" type="RichTextLabel" parent="Windows/RulebookWindow/VBoxContainer" unique_id=1225792062]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ChatWindow" type="Panel" parent="Windows" unique_id=1340420572]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1030.0
+offset_top = 40.0
+offset_right = 1787.0
+offset_bottom = 900.0
+theme_override_styles/panel = ExtResource("4_3hd7y")
+script = ExtResource("5_3hd7y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/ChatWindow" unique_id=1227077157]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/ChatWindow/VBoxContainer" unique_id=596754263]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Windows/ChatWindow/VBoxContainer/Titlebar" unique_id=2000685707]
+layout_mode = 2
+text = "Work - Chat"
+
+[node name="ChatBox" type="RichTextLabel" parent="Windows/ChatWindow/VBoxContainer" unique_id=1223868664]
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
-text = "awdsawdsawd"
+size_flags_vertical = 3
 
-[node name="ChatInput" type="LineEdit" parent="Margin/Columns/RulebookPanel/VBoxContainer" unique_id=1863327800]
+[node name="ChatInput" type="LineEdit" parent="Windows/ChatWindow/VBoxContainer" unique_id=1863327800]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/caret_width = 3
@@ -120,9 +203,12 @@ keep_editing_on_text_submit = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="RuleText" type="RichTextLabel" parent="Margin/Columns/RulebookPanel/VBoxContainer" unique_id=1225792062]
-layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-fit_content = true
-autowrap_mode = 2
+[node name="Taskbar" type="PanelContainer" parent="." unique_id=1785998865]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0

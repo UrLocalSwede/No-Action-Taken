@@ -13,7 +13,14 @@ config_version=5
 config/name="No Action Taken"
 run/main_scene="uid://5vhoft8fk7gc"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://Assets/icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
 
 [physics]
 
