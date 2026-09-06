@@ -1,15 +1,15 @@
 extends Control
 
-@onready var post_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/PostText
-@onready var command_input = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/CommandInput
-@onready var report_reason = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/ReportReason
-@onready var hint_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/HintLabel
-@onready var history_text = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/HistoryText
-@onready var account_info = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/AccountInfo
-@onready var case_header = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/CaseHeader
+@onready var post_text = $Windows/QueueWindow/VBoxContainer/PostText
+@onready var command_input = $Windows/QueueWindow/VBoxContainer/CommandInput
+@onready var report_reason = $Windows/QueueWindow/VBoxContainer/ReportReason
+@onready var hint_text = $Windows/QueueWindow/VBoxContainer/HintLabel
+@onready var history_text = $Windows/QueueWindow/VBoxContainer/HistoryText
+@onready var account_info = $Windows/QueueWindow/VBoxContainer/AccountInfo
+@onready var case_header = $Windows/QueueWindow/VBoxContainer/CaseHeader
 @onready var rule_text = $Windows/RulebookWindow/VBoxContainer/RuleText
 @onready var chat_box = $Windows/ChatWindow/VBoxContainer/ChatBox
-@onready var ghost_label = $Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer/ghostLabel
+@onready var ghost_label = $Windows/QueueWindow/VBoxContainer/ghostLabel
 
 # -- Values that should not be changed --
 var history_lines: Array[String] = []
@@ -152,7 +152,7 @@ func hint():
 #-- Handles command history --
 func add_history(line: String):
 	history_lines.append("> " + line)
-	if history_lines.size() > 8:
+	if history_lines.size() > 6:
 		history_lines.pop_front()
 	history_text.text = "\n".join(history_lines)
 

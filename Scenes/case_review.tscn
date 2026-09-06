@@ -5,6 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://dmeigulbojw7c" path="res://Assets/Backgrounds/black-cat-cowboy-in-desert-sunset-nv-3440x1440.jpg" id="3_oewqx"]
 [ext_resource type="StyleBox" uid="uid://b0h77l7pghukc" path="res://Assets/Themes/windows_style_box_flat.tres" id="4_3hd7y"]
 [ext_resource type="Script" uid="uid://7tsvwi53bc5" path="res://Scripts/draggable_window.gd" id="5_3hd7y"]
+[ext_resource type="Script" uid="uid://d1hnnc7kdjgdo" path="res://Scripts/Taskbar.gd" id="6_30nej"]
+[ext_resource type="Texture2D" uid="uid://b37csrk78s3av" path="res://Assets/PNGs/icons8-book-30.png" id="7_30nej"]
+[ext_resource type="Theme" uid="uid://cqlnfc1l4b21w" path="res://Assets/Themes/TaskBar.tres" id="7_kty0g"]
+[ext_resource type="Texture2D" uid="uid://7yxb1snf603j" path="res://Assets/PNGs/icons8-terminal-30.png" id="8_1i0b7"]
+[ext_resource type="Texture2D" uid="uid://v6oc6j874r8o" path="res://Assets/PNGs/icons8-chat-30.png" id="10_qlac7"]
 
 [node name="CaseReview" type="Control" unique_id=1568099388]
 layout_mode = 3
@@ -48,11 +53,15 @@ size_flags_stretch_ratio = 3.0
 theme_override_styles/panel = ExtResource("4_3hd7y")
 script = ExtResource("5_3hd7y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow" unique_id=1537745984]
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow" unique_id=2121408754]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -63,67 +72,59 @@ layout_mode = 2
 layout_mode = 2
 text = "Review Queue"
 
-[node name="MarginContainer" type="MarginContainer" parent="Windows/QueueWindow/VBoxContainer" unique_id=999317487]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow/VBoxContainer/MarginContainer" unique_id=2121408754]
-layout_mode = 2
-
-[node name="CaseHeader" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=771691039]
+[node name="CaseHeader" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=771691039]
 layout_mode = 2
 text = "Case"
 
-[node name="PostText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1549307160]
+[node name="PostText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer" unique_id=1549307160]
+clip_contents = false
 layout_mode = 2
 theme_override_constants/line_separation = 8
 theme_override_font_sizes/normal_font_size = 18
 text = "Information about case"
 fit_content = true
 
-[node name="ReportReason" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1164934004]
+[node name="ReportReason" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=1164934004]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
 theme_override_font_sizes/font_size = 14
 text = "Report Reason"
 
-[node name="AccountInfo" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=2027729667]
+[node name="AccountInfo" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=2027729667]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
 theme_override_font_sizes/font_size = 14
 text = "Account Info"
 
-[node name="Spacer" type="Control" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=2124619366]
-custom_minimum_size = Vector2(0, 350)
+[node name="Control" type="Control" parent="Windows/QueueWindow/VBoxContainer" unique_id=426918330]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="HistoryText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1485474728]
-custom_minimum_size = Vector2(0, 200)
+[node name="HistoryText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer" unique_id=1485474728]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 focus_mode = 2
 fit_content = true
 scroll_following = true
-autowrap_mode = 1
 vertical_alignment = 2
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="ghostLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=45841521]
+[node name="ghostLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=45841521]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.2901961, 0.32941177, 0.2901961, 1)
-vertical_alignment = 1
+vertical_alignment = 2
 
-[node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1547665790]
+[node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/VBoxContainer" unique_id=1547665790]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 theme_override_constants/caret_width = 4
 keep_editing_on_text_submit = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="HintLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer/MarginContainer/VBoxContainer" unique_id=26338398]
+[node name="HintLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=26338398]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Hint Label"
@@ -133,7 +134,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_left = 660.0
 offset_top = 40.0
-offset_right = 970.0
+offset_right = 1243.0
 offset_bottom = 500.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -142,9 +143,13 @@ script = ExtResource("5_3hd7y")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Windows/RulebookWindow" unique_id=1788816905]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -167,18 +172,22 @@ autowrap_mode = 2
 custom_minimum_size = Vector2(2, 0)
 layout_mode = 1
 anchors_preset = -1
-offset_left = 1030.0
+offset_left = 1283.0
 offset_top = 40.0
-offset_right = 1787.0
+offset_right = 1871.0
 offset_bottom = 900.0
 theme_override_styles/panel = ExtResource("4_3hd7y")
 script = ExtResource("5_3hd7y")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Windows/ChatWindow" unique_id=1227077157]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -204,6 +213,7 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="Taskbar" type="PanelContainer" parent="." unique_id=1785998865]
+modulate = Color(1, 1, 1, 0.8)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -212,3 +222,58 @@ anchor_bottom = 1.0
 offset_top = -48.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("6_30nej")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Taskbar" unique_id=1134248953]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/separation = 48
+
+[node name="QueueWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=2103689844]
+layout_mode = 2
+
+[node name="QueueBtn" type="Button" parent="Taskbar/HBoxContainer/QueueWindowIcon" unique_id=271613808]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("7_kty0g")
+icon = ExtResource("8_1i0b7")
+icon_alignment = 1
+
+[node name="RuleBookWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=852610487]
+layout_mode = 2
+
+[node name="RuleBtn" type="Button" parent="Taskbar/HBoxContainer/RuleBookWindowIcon" unique_id=1754043534]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("7_kty0g")
+icon = ExtResource("7_30nej")
+icon_alignment = 1
+
+[node name="ChatWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=378156846]
+layout_mode = 2
+
+[node name="ChatBtn" type="Button" parent="Taskbar/HBoxContainer/ChatWindowIcon" unique_id=110089878]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("7_kty0g")
+action_mode = 0
+icon = ExtResource("10_qlac7")
+icon_alignment = 1
