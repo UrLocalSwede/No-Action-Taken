@@ -6,10 +6,60 @@
 [ext_resource type="StyleBox" uid="uid://b0h77l7pghukc" path="res://Assets/Themes/windows_style_box_flat.tres" id="4_3hd7y"]
 [ext_resource type="Script" uid="uid://7tsvwi53bc5" path="res://Scripts/draggable_window.gd" id="5_3hd7y"]
 [ext_resource type="Script" uid="uid://d1hnnc7kdjgdo" path="res://Scripts/Taskbar.gd" id="6_30nej"]
+[ext_resource type="StyleBox" uid="uid://d0mekta6r03js" path="res://Assets/Themes/TitleBar_style_box_flat.tres" id="6_plqfg"]
+[ext_resource type="Texture2D" uid="uid://bqev1vf87ql0" path="res://Assets/PNGs/GameIcon.png" id="6_qlac7"]
 [ext_resource type="Texture2D" uid="uid://b37csrk78s3av" path="res://Assets/PNGs/icons8-book-30.png" id="7_30nej"]
 [ext_resource type="Theme" uid="uid://cqlnfc1l4b21w" path="res://Assets/Themes/TaskBar.tres" id="7_kty0g"]
 [ext_resource type="Texture2D" uid="uid://7yxb1snf603j" path="res://Assets/PNGs/icons8-terminal-30.png" id="8_1i0b7"]
 [ext_resource type="Texture2D" uid="uid://v6oc6j874r8o" path="res://Assets/PNGs/icons8-chat-30.png" id="10_qlac7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plqfg"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.050980393, 0.06666667, 0.09019608, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrxcg"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_or2ha"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
 
 [node name="CaseReview" type="Control" unique_id=1568099388]
 layout_mode = 3
@@ -30,6 +80,15 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_oewqx")
 stretch_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1074180320]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.52156866)
 
 [node name="Windows" type="Control" parent="." unique_id=1398093098]
 layout_mode = 1
@@ -52,6 +111,41 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_styles/panel = ExtResource("4_3hd7y")
 script = ExtResource("5_3hd7y")
+title_bar_path = NodePath("Titlebar")
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/QueueWindow" unique_id=319874189]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("6_plqfg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Windows/QueueWindow/Titlebar" unique_id=475790596]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Windows/QueueWindow/Titlebar/HBoxContainer" unique_id=1363768571]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("6_qlac7")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow/Titlebar/HBoxContainer" unique_id=1220623342]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/QueueWindow/Titlebar/HBoxContainer/VBoxContainer" unique_id=1039383466]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Review Queue"
+
+[node name="Shift #" type="Label" parent="Windows/QueueWindow/Titlebar/HBoxContainer/VBoxContainer" unique_id=1781746289]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
+theme_override_font_sizes/font_size = 14
+text = "SHIFT 1"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow" unique_id=2121408754]
 layout_mode = 1
@@ -59,18 +153,11 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 64.0
 offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Titlebar" type="PanelContainer" parent="Windows/QueueWindow/VBoxContainer" unique_id=319874189]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Windows/QueueWindow/VBoxContainer/Titlebar" unique_id=1039383466]
-layout_mode = 2
-text = "Review Queue"
 
 [node name="CaseHeader" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=771691039]
 layout_mode = 2
@@ -104,6 +191,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_plqfg")
 fit_content = true
 scroll_following = true
 vertical_alignment = 2
@@ -119,10 +207,16 @@ vertical_alignment = 2
 [node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/VBoxContainer" unique_id=1547665790]
 layout_mode = 2
 size_flags_vertical = 8
+theme_override_colors/selection_color = Color(0, 0.1254797, 0.69601643, 1)
 theme_override_constants/caret_width = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vrxcg")
+theme_override_styles/focus = SubResource("StyleBoxFlat_or2ha")
+placeholder_text = "Enter Command"
 keep_editing_on_text_submit = true
+drag_and_drop_selection_enabled = false
 caret_blink = true
 caret_blink_interval = 0.5
+caret_mid_grapheme = true
 
 [node name="HintLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=26338398]
 layout_mode = 2
@@ -140,6 +234,20 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = ExtResource("4_3hd7y")
 script = ExtResource("5_3hd7y")
+title_bar_path = NodePath("Titlebar")
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/RulebookWindow" unique_id=297030376]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("6_plqfg")
+
+[node name="Label" type="Label" parent="Windows/RulebookWindow/Titlebar" unique_id=281517989]
+layout_mode = 2
+mouse_filter = 1
+text = "Rule Book"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Windows/RulebookWindow" unique_id=1788816905]
 layout_mode = 1
@@ -147,19 +255,11 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 64.0
 offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Titlebar" type="PanelContainer" parent="Windows/RulebookWindow/VBoxContainer" unique_id=297030376]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Windows/RulebookWindow/VBoxContainer/Titlebar" unique_id=281517989]
-layout_mode = 2
-mouse_filter = 1
-text = "Rule Book"
 
 [node name="RuleText" type="RichTextLabel" parent="Windows/RulebookWindow/VBoxContainer" unique_id=1225792062]
 layout_mode = 2
@@ -178,6 +278,19 @@ offset_right = 1871.0
 offset_bottom = 900.0
 theme_override_styles/panel = ExtResource("4_3hd7y")
 script = ExtResource("5_3hd7y")
+title_bar_path = NodePath("Titlebar")
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/ChatWindow" unique_id=596754263]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("6_plqfg")
+
+[node name="Label" type="Label" parent="Windows/ChatWindow/Titlebar" unique_id=2000685707]
+layout_mode = 2
+text = "Work - Chat"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Windows/ChatWindow" unique_id=1227077157]
 layout_mode = 1
@@ -185,18 +298,11 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 64.0
 offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Titlebar" type="PanelContainer" parent="Windows/ChatWindow/VBoxContainer" unique_id=596754263]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Windows/ChatWindow/VBoxContainer/Titlebar" unique_id=2000685707]
-layout_mode = 2
-text = "Work - Chat"
 
 [node name="ChatBox" type="RichTextLabel" parent="Windows/ChatWindow/VBoxContainer" unique_id=1223868664]
 custom_minimum_size = Vector2(0, 250)

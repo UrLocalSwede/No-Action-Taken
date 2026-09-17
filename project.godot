@@ -13,6 +13,7 @@ config_version=5
 config/name="No Action Taken"
 run/main_scene="uid://5vhoft8fk7gc"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+config/icon="uid://bqev1vf87ql0"
 
 [display]
 
