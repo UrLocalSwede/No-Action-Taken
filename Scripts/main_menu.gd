@@ -1,7 +1,7 @@
 extends Control
 
-@onready var start_button = $PanelContainer/CenterContainer/VBoxContainer/StartButton
-@onready var quit_button = $PanelContainer/CenterContainer/VBoxContainer/QuitButton
+@onready var start_button = %StartButton
+@onready var quit_button = %QuitButton
 
 func _ready() -> void:
 	start_button.pressed.connect(_on_start)

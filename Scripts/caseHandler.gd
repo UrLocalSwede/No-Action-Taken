@@ -1,15 +1,15 @@
 extends Control
 
-@onready var post_text = $Windows/QueueWindow/VBoxContainer/PostText
-@onready var command_input = $Windows/QueueWindow/VBoxContainer/CommandInput
-@onready var report_reason = $Windows/QueueWindow/VBoxContainer/ReportReason
-@onready var hint_text = $Windows/QueueWindow/VBoxContainer/HintLabel
-@onready var history_text = $Windows/QueueWindow/VBoxContainer/HistoryText
-@onready var account_info = $Windows/QueueWindow/VBoxContainer/AccountInfo
-@onready var case_header = $Windows/QueueWindow/VBoxContainer/CaseHeader
-@onready var rule_text = $Windows/RulebookWindow/VBoxContainer/RuleText
-@onready var chat_box = $Windows/ChatWindow/VBoxContainer/ChatBox
-@onready var ghost_label = $Windows/QueueWindow/VBoxContainer/ghostLabel
+@onready var post_text = %PostText
+@onready var command_input = %CommandInput
+@onready var report_reason = %ReportReason
+@onready var hint_text = %HintLabel
+@onready var history_text = %HistoryText
+@onready var account_info = %AccountInfo
+@onready var case_header = %CaseHeader
+@onready var rule_text = %RuleText
+@onready var chat_box = %ChatBox
+@onready var ghost_label = %GhostLabel
 
 # -- Values that should not be changed --
 var history_lines: Array[String] = []
@@ -28,6 +28,7 @@ var stamp = "%02d:%02d" % [now["hour"], now["minute"]]
 var _skip_typing = false
 var typing_id = 0
 var typing_ids = {}
+var _ghost_cmd = ""
 
 const COMMANDS = ["remove", "noaction", "exit"]
 
@@ -38,16 +39,12 @@ func _ready():
 	command_input.text_changed.connect(_on_text_changed)
 	command_input.grab_focus()
 	chat_box.text = ""
-	
-	hint_text.z_index = -1
-	
+
+	hint_text.hide()
+
 	display_case()
 	display_rules()
-	
-	var sb = command_input.get_theme_stylebox("normal")
-	ghost_label.position.x = sb.content_margin_left
-	ghost_label.position.y = sb.content_margin_top
-	
+
 # -- Handles what case the user is on --
 func display_case():
 	if index < cases.size():
@@ -73,8 +70,11 @@ func display_rules():
 	rule_text.text = text
 
 #-- Checks user input for a valid command --
-func submit_verdict(text): 
+func submit_verdict(text):
 	_skip_typing = false
+	hint_text.hide()
+	ghost_label.text = ""
+	_ghost_cmd = ""
 	command_input.clear()
 	add_history(text)
 	var verb = text.strip_edges().to_lower().replace(" ", "")
@@ -122,23 +122,29 @@ func end_shift():
 	command_input.editable = false
 	command_input.placeholder_text = ""
 	
-#-- Handle autocomplete ghost text --
+#-- Handle autocomplete ghost text.
+#   GhostLabel overlays CommandInput and draws on top of it, so only the
+#   UNTYPED tail is rendered; the typed part is padded out with spaces.
+#   IBM Plex Mono is monospace, so the pad lands on the exact character cell. --
 func _on_text_changed(new_text):
 	var typed = new_text.to_lower()
 	ghost_label.text = ""
+	_ghost_cmd = ""
 	if typed == "":
 		return
 	for cmd in COMMANDS:
 		if cmd.begins_with(typed):
-			ghost_label.text = cmd
+			_ghost_cmd = cmd
+			ghost_label.text = " ".repeat(new_text.length()) + cmd.substr(new_text.length())
 			break
-			
+
 #-- Handle autocomplete on tab and skip on enter --
 func _input(event):
-	if event.is_action_pressed("ui_focus_next") and ghost_label.text != "":
-		command_input.text = ghost_label.text
+	if event.is_action_pressed("ui_focus_next") and _ghost_cmd != "":
+		command_input.text = _ghost_cmd
 		command_input.caret_column = command_input.text.length()
 		ghost_label.text = ""
+		_ghost_cmd = ""
 		get_viewport().set_input_as_handled()
 		
 	if event.is_action_pressed("ui_accept"):
@@ -146,8 +152,8 @@ func _input(event):
 
 #-- Hints towards valid commands --	
 func hint():
-	hint_text.z_index = 1
-	hint_text.text = "Unrecognized command; Try using 'Remove' or 'No Action'"
+	hint_text.text = "Unrecognized command; try 'Remove' or 'No Action'"
+	hint_text.show()
 
 #-- Handles command history --
 func add_history(line: String):

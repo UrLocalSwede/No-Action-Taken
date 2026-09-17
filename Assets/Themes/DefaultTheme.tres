@@ -1,22 +1,543 @@
 [gd_resource type="Theme" format=3 uid="uid://dahkg824btrlo"]
 
-[ext_resource type="StyleBox" uid="uid://he2ogs8x01sj" path="res://Assets/Themes/button_styleboxflat.tres" id="1_7o5yc"]
-[ext_resource type="FontFile" uid="uid://c7kxftwx4ma3k" path="res://Assets/Fonts/IBMPlexMono-Regular.ttf" id="1_xxred"]
+[ext_resource type="FontFile" uid="uid://c7kxftwx4ma3k" path="res://Assets/Fonts/IBMPlexMono-Regular.ttf" id="1_mono"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huj65"]
+; ---------------------------------------------------------------- fonts
+; IBM Plex Mono ships Regular only. Synthesise the bold face so [b] in a
+; RichTextLabel cannot fall through to Godot's built-in proportional sans.
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxred"]
-content_margin_left = 24.0
-content_margin_right = 24.0
-bg_color = Color(0.078431375, 0.09411765, 0.101960786, 1)
-border_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
+[sub_resource type="FontVariation" id="Font_bold"]
+base_font = ExtResource("1_mono")
+variation_embolden = 0.6
+
+[sub_resource type="FontVariation" id="Font_tracked"]
+base_font = ExtResource("1_mono")
+spacing_glyph = 2
+
+; ---------------------------------------------------------------- windows
+
+[sub_resource type="StyleBoxFlat" id="SB_window_body"]
+bg_color = Color(0.08627451, 0.09411765, 0.11372549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 28
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="SB_window_body_active"]
+bg_color = Color(0.08627451, 0.09411765, 0.11372549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 0.55)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 32
+shadow_offset = Vector2(0, 12)
+
+[sub_resource type="StyleBoxFlat" id="SB_titlebar"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.11764706, 0.12941177, 0.15686275, 1)
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_detail = 12
+
+; ---------------------------------------------------------------- wells & inputs
+
+[sub_resource type="StyleBoxFlat" id="SB_inset"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0627451, 0.07450981, 0.09803922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_input_normal"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0627451, 0.07450981, 0.09803922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+; border stays 1px on focus: widening it changes get_minimum_size() and the
+; field would jump when clicked. Only the colour changes.
+[sub_resource type="StyleBoxFlat" id="SB_input_focus"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0627451, 0.07450981, 0.09803922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_input_readonly"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0627451, 0.07450981, 0.09803922, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+; Margins MUST match SB_input_normal exactly. Label and LineEdit both offset
+; their text by the stylebox offset, so identical margins + identical font
+; put the ghost suffix on the same character cell with no script.
+[sub_resource type="StyleBoxEmpty" id="SB_ghost"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+
+; ---------------------------------------------------------------- buttons
+
+[sub_resource type="StyleBoxEmpty" id="SB_empty"]
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_normal"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.13333334, 0.14901961, 0.18039216, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_hover"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16470589, 0.18431373, 0.22352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23529412, 0.2627451, 0.3137255, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_pressed"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.10196079, 0.11764706, 0.14509805, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 0.55)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+; transparent bg: the focus box is drawn OVER normal/hover/pressed
+[sub_resource type="StyleBoxFlat" id="SB_btn_focus"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_disabled"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.13333334, 0.14901961, 0.18039216, 0.45)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 0.4)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 12
+
+; ---------------------------------------------------------------- taskbar
+
+[sub_resource type="StyleBoxFlat" id="SB_taskbar"]
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_right = 16.0
+content_margin_bottom = 6.0
+bg_color = Color(0.10196079, 0.11372549, 0.13725491, 0.92)
+border_width_top = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_tb_hover"]
+bg_color = Color(0.9019608, 0.9098039, 0.9254902, 0.08)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_tb_pressed"]
+bg_color = Color(0.9019608, 0.9098039, 0.9254902, 0.14)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_tb_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_tb_active"]
+bg_color = Color(0.29803923, 0.5529412, 0.9647059, 0.16)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29803923, 0.5529412, 0.9647059, 0.55)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_title_btn_hover"]
+bg_color = Color(0.9019608, 0.9098039, 0.9254902, 0.1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 8
+
+[sub_resource type="StyleBoxFlat" id="SB_title_btn_pressed"]
+bg_color = Color(0.29803923, 0.5529412, 0.9647059, 0.16)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 8
+
+; ---------------------------------------------------------------- surfaces & chrome
+
+[sub_resource type="StyleBoxFlat" id="SB_panel"]
+bg_color = Color(0.08627451, 0.09411765, 0.11372549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_panel_container"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.13333334, 0.14901961, 0.18039216, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="SB_backdrop"]
+bg_color = Color(0.05882353, 0.06666667, 0.08235294, 1)
+
+[sub_resource type="StyleBoxLine" id="SB_separator"]
+color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+thickness = 1
+
+[sub_resource type="StyleBoxEmpty" id="SB_scroll"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="SB_grabber"]
+bg_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SB_grabber_hl"]
+bg_color = Color(0.2901961, 0.3137255, 0.3764706, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SB_grabber_pressed"]
+bg_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [resource]
-default_font = ExtResource("1_xxred")
+default_font = ExtResource("1_mono")
 default_font_size = 16
-Button/styles/disabled = null
-Button/styles/focus = ExtResource("1_7o5yc")
-Button/styles/hover = ExtResource("1_7o5yc")
-Button/styles/normal = SubResource("StyleBoxEmpty_huj65")
-Button/styles/pressed = ExtResource("1_7o5yc")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_xxred")
+
+Label/colors/font_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Label/font_sizes/font_size = 16
+
+RichTextLabel/colors/default_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+RichTextLabel/constants/line_separation = 6
+RichTextLabel/font_sizes/normal_font_size = 16
+RichTextLabel/fonts/normal_font = ExtResource("1_mono")
+RichTextLabel/fonts/bold_font = SubResource("Font_bold")
+RichTextLabel/fonts/italics_font = ExtResource("1_mono")
+RichTextLabel/fonts/bold_italics_font = SubResource("Font_bold")
+RichTextLabel/fonts/mono_font = ExtResource("1_mono")
+RichTextLabel/styles/normal = SubResource("SB_empty")
+RichTextLabel/styles/focus = SubResource("SB_empty")
+
+LineEdit/colors/caret_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+LineEdit/colors/font_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+LineEdit/colors/font_placeholder_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+LineEdit/colors/font_selected_color = Color(1, 1, 1, 1)
+LineEdit/colors/font_uneditable_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+LineEdit/colors/selection_color = Color(0.29803923, 0.5529412, 0.9647059, 0.35)
+LineEdit/constants/caret_width = 2
+LineEdit/font_sizes/font_size = 16
+LineEdit/styles/normal = SubResource("SB_input_normal")
+LineEdit/styles/focus = SubResource("SB_input_focus")
+LineEdit/styles/read_only = SubResource("SB_input_readonly")
+
+Button/colors/font_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Button/colors/font_disabled_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+Button/colors/icon_normal_color = Color(0.5686275, 0.6, 0.6509804, 1)
+Button/colors/icon_hover_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Button/colors/icon_pressed_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Button/colors/icon_focus_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+Button/constants/h_separation = 10
+Button/styles/normal = SubResource("SB_btn_normal")
+Button/styles/hover = SubResource("SB_btn_hover")
+Button/styles/pressed = SubResource("SB_btn_pressed")
+Button/styles/focus = SubResource("SB_btn_focus")
+Button/styles/disabled = SubResource("SB_btn_disabled")
+
+Panel/styles/panel = SubResource("SB_panel")
+PanelContainer/styles/panel = SubResource("SB_panel_container")
+
+HSeparator/constants/separation = 16
+HSeparator/styles/separator = SubResource("SB_separator")
+
+VScrollBar/styles/scroll = SubResource("SB_scroll")
+VScrollBar/styles/grabber = SubResource("SB_grabber")
+VScrollBar/styles/grabber_highlight = SubResource("SB_grabber_hl")
+VScrollBar/styles/grabber_pressed = SubResource("SB_grabber_pressed")
+HScrollBar/styles/scroll = SubResource("SB_scroll")
+HScrollBar/styles/grabber = SubResource("SB_grabber")
+HScrollBar/styles/grabber_highlight = SubResource("SB_grabber_hl")
+HScrollBar/styles/grabber_pressed = SubResource("SB_grabber_pressed")
+
+ScrollContainer/styles/panel = SubResource("SB_empty")
+
+; ---------------------------------------------------------------- variations
+
+WindowTitle/base_type = &"Label"
+WindowTitle/colors/font_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+WindowTitle/font_sizes/font_size = 15
+
+WindowSubtitle/base_type = &"Label"
+WindowSubtitle/colors/font_color = Color(0.5686275, 0.6, 0.6509804, 1)
+WindowSubtitle/font_sizes/font_size = 12
+
+SectionLabel/base_type = &"Label"
+SectionLabel/colors/font_color = Color(0.5686275, 0.6, 0.6509804, 1)
+SectionLabel/font_sizes/font_size = 12
+SectionLabel/fonts/font = SubResource("Font_tracked")
+
+MetaLabel/base_type = &"Label"
+MetaLabel/colors/font_color = Color(0.5686275, 0.6, 0.6509804, 1)
+MetaLabel/font_sizes/font_size = 13
+
+GhostLabel/base_type = &"Label"
+GhostLabel/colors/font_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+GhostLabel/font_sizes/font_size = 16
+GhostLabel/styles/normal = SubResource("SB_ghost")
+
+HintLabel/base_type = &"Label"
+HintLabel/colors/font_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+HintLabel/font_sizes/font_size = 13
+
+MenuTitle/base_type = &"Label"
+MenuTitle/colors/font_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+MenuTitle/font_sizes/font_size = 30
+MenuTitle/fonts/font = SubResource("Font_tracked")
+
+MenuSubtitle/base_type = &"Label"
+MenuSubtitle/colors/font_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+MenuSubtitle/font_sizes/font_size = 14
+
+StatusLabel/base_type = &"Label"
+StatusLabel/colors/font_color = Color(0.3529412, 0.38431373, 0.4392157, 1)
+StatusLabel/font_sizes/font_size = 12
+
+CaseBody/base_type = &"RichTextLabel"
+CaseBody/colors/default_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+CaseBody/constants/line_separation = 8
+CaseBody/font_sizes/normal_font_size = 18
+
+LogPanel/base_type = &"RichTextLabel"
+LogPanel/colors/default_color = Color(0.5686275, 0.6, 0.6509804, 1)
+LogPanel/constants/line_separation = 6
+LogPanel/font_sizes/normal_font_size = 14
+LogPanel/styles/normal = SubResource("SB_inset")
+
+ChatPanel/base_type = &"RichTextLabel"
+ChatPanel/colors/default_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+ChatPanel/constants/line_separation = 6
+ChatPanel/font_sizes/normal_font_size = 15
+ChatPanel/styles/normal = SubResource("SB_inset")
+
+RuleBody/base_type = &"RichTextLabel"
+RuleBody/colors/default_color = Color(0.5686275, 0.6, 0.6509804, 1)
+RuleBody/constants/line_separation = 7
+RuleBody/font_sizes/normal_font_size = 15
+
+TitlebarButton/base_type = &"Button"
+TitlebarButton/colors/font_color = Color(0.5686275, 0.6, 0.6509804, 1)
+TitlebarButton/colors/font_hover_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TitlebarButton/colors/font_pressed_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TitlebarButton/font_sizes/font_size = 16
+TitlebarButton/styles/normal = SubResource("SB_empty")
+TitlebarButton/styles/hover = SubResource("SB_title_btn_hover")
+TitlebarButton/styles/pressed = SubResource("SB_title_btn_pressed")
+TitlebarButton/styles/focus = SubResource("SB_empty")
+TitlebarButton/styles/disabled = SubResource("SB_empty")
+
+TaskbarButton/base_type = &"Button"
+TaskbarButton/colors/icon_normal_color = Color(0.5686275, 0.6, 0.6509804, 1)
+TaskbarButton/colors/icon_hover_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TaskbarButton/colors/icon_pressed_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TaskbarButton/colors/icon_focus_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TaskbarButton/constants/icon_max_width = 24
+TaskbarButton/styles/normal = SubResource("SB_empty")
+TaskbarButton/styles/hover = SubResource("SB_tb_hover")
+TaskbarButton/styles/pressed = SubResource("SB_tb_pressed")
+TaskbarButton/styles/focus = SubResource("SB_tb_focus")
+TaskbarButton/styles/disabled = SubResource("SB_empty")
+
+; every state declared explicitly rather than chaining base_type to
+; TaskbarButton, so this does not depend on recursive variation resolution
+TaskbarButtonActive/base_type = &"Button"
+TaskbarButtonActive/colors/icon_normal_color = Color(0.9019608, 0.9098039, 0.9254902, 1)
+TaskbarButtonActive/colors/icon_hover_color = Color(1, 1, 1, 1)
+TaskbarButtonActive/colors/icon_pressed_color = Color(1, 1, 1, 1)
+TaskbarButtonActive/colors/icon_focus_color = Color(1, 1, 1, 1)
+TaskbarButtonActive/constants/icon_max_width = 24
+TaskbarButtonActive/styles/normal = SubResource("SB_tb_active")
+TaskbarButtonActive/styles/hover = SubResource("SB_tb_pressed")
+TaskbarButtonActive/styles/pressed = SubResource("SB_tb_pressed")
+TaskbarButtonActive/styles/focus = SubResource("SB_tb_focus")
+TaskbarButtonActive/styles/disabled = SubResource("SB_empty")
+
+WindowBody/base_type = &"Panel"
+WindowBody/styles/panel = SubResource("SB_window_body")
+
+WindowBodyActive/base_type = &"Panel"
+WindowBodyActive/styles/panel = SubResource("SB_window_body_active")
+
+WindowTitlebar/base_type = &"PanelContainer"
+WindowTitlebar/styles/panel = SubResource("SB_titlebar")
+
+Taskbar/base_type = &"PanelContainer"
+Taskbar/styles/panel = SubResource("SB_taskbar")
+
+Backdrop/base_type = &"PanelContainer"
+Backdrop/styles/panel = SubResource("SB_backdrop")

@@ -1,216 +1,180 @@
 [gd_scene format=3 uid="uid://c4pib8hlrxg4y"]
 
-[ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_8cvbq"]
-[ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/caseHandler.gd" id="2_o617t"]
-[ext_resource type="Texture2D" uid="uid://dmeigulbojw7c" path="res://Assets/Backgrounds/black-cat-cowboy-in-desert-sunset-nv-3440x1440.jpg" id="3_oewqx"]
-[ext_resource type="StyleBox" uid="uid://b0h77l7pghukc" path="res://Assets/Themes/windows_style_box_flat.tres" id="4_3hd7y"]
-[ext_resource type="Script" uid="uid://7tsvwi53bc5" path="res://Scripts/draggable_window.gd" id="5_3hd7y"]
-[ext_resource type="Script" uid="uid://d1hnnc7kdjgdo" path="res://Scripts/Taskbar.gd" id="6_30nej"]
-[ext_resource type="StyleBox" uid="uid://d0mekta6r03js" path="res://Assets/Themes/TitleBar_style_box_flat.tres" id="6_plqfg"]
-[ext_resource type="Texture2D" uid="uid://bqev1vf87ql0" path="res://Assets/PNGs/GameIcon.png" id="6_qlac7"]
-[ext_resource type="Texture2D" uid="uid://b37csrk78s3av" path="res://Assets/PNGs/icons8-book-30.png" id="7_30nej"]
-[ext_resource type="Theme" uid="uid://cqlnfc1l4b21w" path="res://Assets/Themes/TaskBar.tres" id="7_kty0g"]
-[ext_resource type="Texture2D" uid="uid://7yxb1snf603j" path="res://Assets/PNGs/icons8-terminal-30.png" id="8_1i0b7"]
-[ext_resource type="Texture2D" uid="uid://v6oc6j874r8o" path="res://Assets/PNGs/icons8-chat-30.png" id="10_qlac7"]
+[ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://bnnybqooti2wt" path="res://Scripts/caseHandler.gd" id="2_case"]
+[ext_resource type="Texture2D" uid="uid://dmeigulbojw7c" path="res://Assets/Backgrounds/black-cat-cowboy-in-desert-sunset-nv-3440x1440.jpg" id="3_wall"]
+[ext_resource type="Script" uid="uid://d1hnnc7kdjgdo" path="res://Scripts/windowsHandler.gd" id="4_wh"]
+[ext_resource type="Texture2D" uid="uid://uc7yswq3t1fb" path="res://Assets/PNGs/icons8-terminal-30-mono.png" id="5_term"]
+[ext_resource type="Texture2D" uid="uid://ltv82rcrailu" path="res://Assets/PNGs/icons8-book-30-mono.png" id="6_book"]
+[ext_resource type="Texture2D" uid="uid://dqx78qpfpsgtk" path="res://Assets/PNGs/icons8-chat-30-mono.png" id="7_chat"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plqfg"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(0.050980393, 0.06666667, 0.09019608, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrxcg"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_or2ha"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 16
-
-[node name="CaseReview" type="Control" unique_id=1568099388]
+[node name="CaseReview" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_8cvbq")
-script = ExtResource("2_o617t")
+theme = ExtResource("1_theme")
+script = ExtResource("2_case")
 
-[node name="Wallpaper" type="TextureRect" parent="." unique_id=193146685]
+[node name="Wallpaper" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_oewqx")
-stretch_mode = 3
+mouse_filter = 2
+texture = ExtResource("3_wall")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1074180320]
+[node name="Scrim" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.52156866)
+mouse_filter = 2
+color = Color(0.05882353, 0.06666667, 0.08235294, 0.62)
 
-[node name="Windows" type="Control" parent="." unique_id=1398093098]
+[node name="Windows" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="QueueWindow" type="Panel" parent="Windows" unique_id=447956893]
+; Window offsets below are design-time only: windowsHandler._layout_windows()
+; retiles all three to the real viewport on _ready().
+
+[node name="QueueWindow" type="Panel" parent="Windows"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 600.0
-offset_bottom = 900.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-theme_override_styles/panel = ExtResource("4_3hd7y")
-script = ExtResource("5_3hd7y")
-title_bar_path = NodePath("Titlebar")
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 632.0
+offset_bottom = 1000.0
+theme_type_variation = &"WindowBody"
 
-[node name="Titlebar" type="PanelContainer" parent="Windows/QueueWindow" unique_id=319874189]
+[node name="Titlebar" type="PanelContainer" parent="Windows/QueueWindow"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 50.0
+offset_bottom = 54.0
 grow_horizontal = 2
-theme_override_styles/panel = ExtResource("6_plqfg")
+theme_type_variation = &"WindowTitlebar"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Windows/QueueWindow/Titlebar" unique_id=475790596]
+[node name="Row" type="HBoxContainer" parent="Windows/QueueWindow/Titlebar"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="Windows/QueueWindow/Titlebar/HBoxContainer" unique_id=1363768571]
-layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("6_qlac7")
-expand_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow/Titlebar/HBoxContainer" unique_id=1220623342]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_constants/separation = 0
-
-[node name="Title" type="Label" parent="Windows/QueueWindow/Titlebar/HBoxContainer/VBoxContainer" unique_id=1039383466]
+[node name="Icon" type="TextureRect" parent="Windows/QueueWindow/Titlebar/Row"]
+self_modulate = Color(0.5686275, 0.6, 0.6509804, 1)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Review Queue"
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("5_term")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Shift #" type="Label" parent="Windows/QueueWindow/Titlebar/HBoxContainer/VBoxContainer" unique_id=1781746289]
+[node name="Titles" type="VBoxContainer" parent="Windows/QueueWindow/Titlebar/Row"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
-theme_override_font_sizes/font_size = 14
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/QueueWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+theme_type_variation = &"WindowTitle"
+text = "REVIEW QUEUE"
+
+[node name="Subtitle" type="Label" parent="Windows/QueueWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+theme_type_variation = &"WindowSubtitle"
 text = "SHIFT 1"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/QueueWindow" unique_id=2121408754]
+[node name="Spacer" type="Control" parent="Windows/QueueWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MinimizeButton" type="Button" parent="Windows/QueueWindow/Titlebar/Row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "—"
+
+[node name="Body" type="MarginContainer" parent="Windows/QueueWindow"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 74
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="CaseHeader" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=771691039]
+[node name="VBox" type="VBoxContainer" parent="Windows/QueueWindow/Body"]
 layout_mode = 2
-text = "Case"
+mouse_filter = 2
+theme_override_constants/separation = 12
 
-[node name="PostText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer" unique_id=1549307160]
+[node name="CaseHeader" type="Label" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SectionLabel"
+text = "CASE"
+
+[node name="PostText" type="RichTextLabel" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
-theme_override_constants/line_separation = 8
-theme_override_font_sizes/normal_font_size = 18
+theme_type_variation = &"CaseBody"
 text = "Information about case"
 fit_content = true
 
-[node name="ReportReason" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=1164934004]
+[node name="ReportReason" type="Label" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
-theme_override_font_sizes/font_size = 14
+theme_type_variation = &"MetaLabel"
 text = "Report Reason"
 
-[node name="AccountInfo" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=2027729667]
+[node name="AccountInfo" type="Label" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.41960785, 0.45882353, 0.41960785, 1)
-theme_override_font_sizes/font_size = 14
+theme_type_variation = &"MetaLabel"
 text = "Account Info"
 
-[node name="Control" type="Control" parent="Windows/QueueWindow/VBoxContainer" unique_id=426918330]
-layout_mode = 2
-
-[node name="HistoryText" type="RichTextLabel" parent="Windows/QueueWindow/VBoxContainer" unique_id=1485474728]
+[node name="HistoryText" type="RichTextLabel" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
-focus_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_plqfg")
+focus_mode = 0
+theme_type_variation = &"LogPanel"
 fit_content = true
 scroll_following = true
 vertical_alignment = 2
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="ghostLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=45841521]
+[node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.2901961, 0.32941177, 0.2901961, 1)
-vertical_alignment = 2
-
-[node name="CommandInput" type="LineEdit" parent="Windows/QueueWindow/VBoxContainer" unique_id=1547665790]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_colors/selection_color = Color(0, 0.1254797, 0.69601643, 1)
-theme_override_constants/caret_width = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vrxcg")
-theme_override_styles/focus = SubResource("StyleBoxFlat_or2ha")
 placeholder_text = "Enter Command"
 keep_editing_on_text_submit = true
 drag_and_drop_selection_enabled = false
@@ -218,168 +182,249 @@ caret_blink = true
 caret_blink_interval = 0.5
 caret_mid_grapheme = true
 
-[node name="HintLabel" type="Label" parent="Windows/QueueWindow/VBoxContainer" unique_id=26338398]
+[node name="GhostLabel" type="Label" parent="Windows/QueueWindow/Body/VBox/CommandInput"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"GhostLabel"
+vertical_alignment = 1
+clip_text = true
+
+[node name="HintLabel" type="Label" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 8
-text = "Hint Label"
+theme_type_variation = &"HintLabel"
 
-[node name="RulebookWindow" type="Panel" parent="Windows" unique_id=1676816300]
+[node name="RulebookWindow" type="Panel" parent="Windows"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 660.0
-offset_top = 40.0
-offset_right = 1243.0
-offset_bottom = 500.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-theme_override_styles/panel = ExtResource("4_3hd7y")
-script = ExtResource("5_3hd7y")
-title_bar_path = NodePath("Titlebar")
+offset_left = 656.0
+offset_top = 24.0
+offset_right = 1264.0
+offset_bottom = 1000.0
+theme_type_variation = &"WindowBody"
 
-[node name="Titlebar" type="PanelContainer" parent="Windows/RulebookWindow" unique_id=297030376]
+[node name="Titlebar" type="PanelContainer" parent="Windows/RulebookWindow"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 50.0
+offset_bottom = 54.0
 grow_horizontal = 2
-theme_override_styles/panel = ExtResource("6_plqfg")
+theme_type_variation = &"WindowTitlebar"
 
-[node name="Label" type="Label" parent="Windows/RulebookWindow/Titlebar" unique_id=281517989]
+[node name="Row" type="HBoxContainer" parent="Windows/RulebookWindow/Titlebar"]
 layout_mode = 2
-mouse_filter = 1
-text = "Rule Book"
+mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/RulebookWindow" unique_id=1788816905]
+[node name="Icon" type="TextureRect" parent="Windows/RulebookWindow/Titlebar/Row"]
+self_modulate = Color(0.5686275, 0.6, 0.6509804, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_book")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Titles" type="VBoxContainer" parent="Windows/RulebookWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/RulebookWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+theme_type_variation = &"WindowTitle"
+text = "RULE BOOK"
+
+[node name="Spacer" type="Control" parent="Windows/RulebookWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MinimizeButton" type="Button" parent="Windows/RulebookWindow/Titlebar/Row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "—"
+
+[node name="Body" type="MarginContainer" parent="Windows/RulebookWindow"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 74
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="RuleText" type="RichTextLabel" parent="Windows/RulebookWindow/VBoxContainer" unique_id=1225792062]
+[node name="VBox" type="VBoxContainer" parent="Windows/RulebookWindow/Body"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="RuleText" type="RichTextLabel" parent="Windows/RulebookWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_type_variation = &"RuleBody"
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2
 
-[node name="ChatWindow" type="Panel" parent="Windows" unique_id=1340420572]
-custom_minimum_size = Vector2(2, 0)
+[node name="ChatWindow" type="Panel" parent="Windows"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 1283.0
-offset_top = 40.0
-offset_right = 1871.0
-offset_bottom = 900.0
-theme_override_styles/panel = ExtResource("4_3hd7y")
-script = ExtResource("5_3hd7y")
-title_bar_path = NodePath("Titlebar")
+offset_left = 1288.0
+offset_top = 24.0
+offset_right = 1896.0
+offset_bottom = 1000.0
+theme_type_variation = &"WindowBody"
 
-[node name="Titlebar" type="PanelContainer" parent="Windows/ChatWindow" unique_id=596754263]
+[node name="Titlebar" type="PanelContainer" parent="Windows/ChatWindow"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 50.0
+offset_bottom = 54.0
 grow_horizontal = 2
-theme_override_styles/panel = ExtResource("6_plqfg")
+theme_type_variation = &"WindowTitlebar"
 
-[node name="Label" type="Label" parent="Windows/ChatWindow/Titlebar" unique_id=2000685707]
+[node name="Row" type="HBoxContainer" parent="Windows/ChatWindow/Titlebar"]
 layout_mode = 2
-text = "Work - Chat"
+mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Windows/ChatWindow" unique_id=1227077157]
+[node name="Icon" type="TextureRect" parent="Windows/ChatWindow/Titlebar/Row"]
+self_modulate = Color(0.5686275, 0.6, 0.6509804, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("7_chat")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Titles" type="VBoxContainer" parent="Windows/ChatWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/ChatWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+theme_type_variation = &"WindowTitle"
+text = "WORK — CHAT"
+
+[node name="Subtitle" type="Label" parent="Windows/ChatWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+theme_type_variation = &"WindowSubtitle"
+text = "TEO"
+
+[node name="Spacer" type="Control" parent="Windows/ChatWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MinimizeButton" type="Button" parent="Windows/ChatWindow/Titlebar/Row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "—"
+
+[node name="Body" type="MarginContainer" parent="Windows/ChatWindow"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 74
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="ChatBox" type="RichTextLabel" parent="Windows/ChatWindow/VBoxContainer" unique_id=1223868664]
+[node name="VBox" type="VBoxContainer" parent="Windows/ChatWindow/Body"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="ChatBox" type="RichTextLabel" parent="Windows/ChatWindow/Body/VBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_vertical = 3
+theme_type_variation = &"ChatPanel"
+scroll_following = true
 
-[node name="ChatInput" type="LineEdit" parent="Windows/ChatWindow/VBoxContainer" unique_id=1863327800]
+[node name="ChatInput" type="LineEdit" parent="Windows/ChatWindow/Body/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_constants/caret_width = 3
+placeholder_text = "Read only"
 editable = false
 keep_editing_on_text_submit = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Taskbar" type="PanelContainer" parent="." unique_id=1785998865]
-modulate = Color(1, 1, 1, 0.8)
+[node name="Taskbar" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -48.0
+offset_top = -56.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("6_30nej")
+theme_type_variation = &"Taskbar"
+script = ExtResource("4_wh")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Taskbar" unique_id=1134248953]
+[node name="HBoxContainer" type="HBoxContainer" parent="Taskbar"]
 layout_mode = 2
-mouse_filter = 0
-theme_override_constants/separation = 48
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 8
 
-[node name="QueueWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=2103689844]
+[node name="QueueBtn" type="Button" parent="Taskbar/HBoxContainer"]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-
-[node name="QueueBtn" type="Button" parent="Taskbar/HBoxContainer/QueueWindowIcon" unique_id=271613808]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-theme = ExtResource("7_kty0g")
-icon = ExtResource("8_1i0b7")
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TaskbarButton"
+icon = ExtResource("5_term")
 icon_alignment = 1
 
-[node name="RuleBookWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=852610487]
+[node name="RuleBtn" type="Button" parent="Taskbar/HBoxContainer"]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-
-[node name="RuleBtn" type="Button" parent="Taskbar/HBoxContainer/RuleBookWindowIcon" unique_id=1754043534]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-theme = ExtResource("7_kty0g")
-icon = ExtResource("7_30nej")
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TaskbarButton"
+icon = ExtResource("6_book")
 icon_alignment = 1
 
-[node name="ChatWindowIcon" type="Panel" parent="Taskbar/HBoxContainer" unique_id=378156846]
+[node name="ChatBtn" type="Button" parent="Taskbar/HBoxContainer"]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-
-[node name="ChatBtn" type="Button" parent="Taskbar/HBoxContainer/ChatWindowIcon" unique_id=110089878]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-theme = ExtResource("7_kty0g")
-action_mode = 0
-icon = ExtResource("10_qlac7")
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TaskbarButton"
+icon = ExtResource("7_chat")
 icon_alignment = 1
