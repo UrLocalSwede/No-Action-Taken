@@ -15,6 +15,12 @@ Shift one gives you two rules and six cases, and the onboarding tone is delibera
 cheerful. The rules are clear on purpose — day one teaches the loop, not the
 difficulty. That changes.
 
+There are ten shifts. Each one adds a section to the rulebook and nothing is ever
+taken away, so by the end you are holding nine rules that do not entirely agree with
+each other. New commands arrive as you go, and some cases cannot be decided from the
+post alone — you have to look the account up first. A ruling on shift one is still on
+file on shift three.
+
 You are graded on accuracy against the rulebook as written. Whether the rulebook is
 *right* is not a question the console accepts input on.
 
@@ -37,17 +43,43 @@ minimised — either from the titlebar button or by clicking the taskbar tile.
 
 Type into the Review Queue and press <kbd>Enter</kbd>:
 
+Verdicts resolve the case and move the queue on:
+
+| Command | From | Effect |
+|---|---|---|
+| `remove` | shift 1 | Take the post down |
+| `noaction` | shift 1 | Leave the post up |
+| `escalate` | shift 8 | Hand the case up to Tier 2 |
+
+Investigation commands print to the console and change nothing. Looking costs you
+time, never accuracy:
+
+| Command | From | Effect |
+|---|---|---|
+| `thread` | shift 2 | The replies under the post |
+| `record` | shift 2 | The history of the account that posted it |
+| `record <handle>` | shift 2 | Any other account the case knows about |
+| `source` | shift 4 | Who reported it, and how it got flagged |
+| `precedent` | shift 6 | How cases like this one were decided before |
+| `file <id>` | shift 9 | The internal file on a case |
+
+The Review Queue shows the poster's handle, so `record` on its own looks up the
+account in front of you. Where a case knows about other accounts — someone in the reply
+chain, or the subject of the report — the record ends with an `Also on file` line naming
+them. `file` on its own opens the case's file when there is only one.
+
 | Command | Effect |
 |---|---|
-| `remove` | Take the post down |
-| `noaction` | Leave the post up |
+| `help` | List what you can type right now |
+| `clockout` | End the shift and start the next one |
 | `exit` | Back to the main menu |
 
 <kbd>Tab</kbd> accepts the greyed-out autocomplete suggestion.
 <kbd>Enter</kbd> skips the typewriter effect while text is still printing.
 
 Getting a case wrong earns a citation. At the end of the shift you get a count and an
-accuracy score.
+accuracy score, then you clock out and the next shift begins. Progress is saved to
+`user://progress.cfg`, so `exit` puts you back where you left off.
 
 ---
 
@@ -78,11 +110,14 @@ Scenes/
   MainMenu.tscn      boot screen
   case_review.tscn   the desktop
 Scripts/
-  caseHandler.gd     game loop: cases, verdicts, typing effect, autocomplete
+  caseHandler.gd     game loop: cases, verdicts, console, typing effect, autocomplete
   case_data.gd       all shift/rule/case content
+  command_data.gd    the command registry: what exists, and from which shift
+  game_state.gd      autoload: current shift, flags, citations, save file
   windowsHandler.gd  window manager: drag, resize, minimise animations, taskbar
   main_menu.gd
 shift-one.md       design doc for shift one
+shifts-two-to-ten.md  design doc for the rest
 ```
 
 Two things worth knowing before you change anything:
@@ -91,7 +126,16 @@ Two things worth knowing before you change anything:
   variations. Style new UI by adding a variation and setting `theme_type_variation` on
   the node — please don't add per-node `theme_override_*`.
 - **All writing lives in `Scripts/case_data.gd`.** Adding a shift or a case means
-  editing that file only.
+  editing that file only. Rules live once in `RULEBOOK` and shifts list the section
+  numbers in force, so no rule text is ever restated. A case only needs the keys that
+  matter to it — `CASE_DEFAULTS` supplies the rest.
+- **Adding a command means editing `Scripts/command_data.gd`.** One table drives the
+  dispatcher, the autocomplete ghost and `help` together, so they cannot drift apart.
+  Set `unlock` to the first shift it should exist on.
+
+`CaseData.validate()` runs on every debug launch and warns about cases that ask for a
+verdict the player cannot type yet, cases with no post text, and rule ids that do not
+exist.
 
 ---
 

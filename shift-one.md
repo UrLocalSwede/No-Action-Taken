@@ -112,6 +112,6 @@ Flat, corporate, no acknowledgment of case 5. The absence of comment is the comm
 
 **Citations, not failure.** No game-over on shift one. A citation is a line item and a small, cold note. The punishment is the tally, not a loss screen.
 
-**Data structure.** All six are scripted cases, so they live in `cases/scripted/shift_01.json` — post text, report reason, account fields, the rule that fires (or null), and an optional `flags` array for consequences to check later (`["copse_lane_removed"]`). No generated cases yet; introduce those in shift two once the player knows what they're doing.
+**Data structure.** All six are scripted cases and they live in the `SHIFTS` table in `Scripts/case_data.gd` — post text, report reason, account fields, the rule that fires (`0` for none), and the optional continuity fields for consequences to check later. Case 5 uses `sets_flag_on` to record which way the player ruled (`copse_lane_removed` / `copse_lane_left_up`); shift three reads it. Anything a case does not specify is filled from `CASE_DEFAULTS`. See `shifts-two-to-ten.md` for the rest of the ladder.
 
 **Prototype it flat.** Print the case, read a number, print the verdict. If case 5 makes you hesitate in a bare terminal with no font and no sound, the game works.

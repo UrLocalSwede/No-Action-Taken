@@ -96,10 +96,11 @@ layout_mode = 2
 theme_type_variation = &"WindowTitle"
 text = "REVIEW QUEUE"
 
-[node name="Subtitle" type="Label" parent="Windows/QueueWindow/Titlebar/Row/Titles"]
+[node name="ShiftSubtitle" type="Label" parent="Windows/QueueWindow/Titlebar/Row/Titles"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"WindowSubtitle"
-text = "SHIFT 1"
+text = "SHIFT 01"
 
 [node name="Spacer" type="Control" parent="Windows/QueueWindow/Titlebar/Row"]
 layout_mode = 2
@@ -143,8 +144,15 @@ unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
 theme_type_variation = &"CaseBody"
+custom_minimum_size = Vector2(0, 120)
 text = "Information about case"
 fit_content = true
+
+[node name="PostedBy" type="Label" parent="Windows/QueueWindow/Body/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"MetaLabel"
+text = "Posted By"
 
 [node name="ReportReason" type="Label" parent="Windows/QueueWindow/Body/VBox"]
 unique_name_in_owner = true
@@ -165,7 +173,8 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 focus_mode = 0
 theme_type_variation = &"LogPanel"
-fit_content = true
+custom_minimum_size = Vector2(0, 260)
+bbcode_enabled = true
 scroll_following = true
 vertical_alignment = 2
 selection_enabled = true
@@ -246,6 +255,12 @@ layout_mode = 2
 theme_type_variation = &"WindowTitle"
 text = "RULE BOOK"
 
+[node name="RuleSubtitle" type="Label" parent="Windows/RulebookWindow/Titlebar/Row/Titles"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"WindowSubtitle"
+text = "2 SECTIONS IN FORCE"
+
 [node name="Spacer" type="Control" parent="Windows/RulebookWindow/Titlebar/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -283,7 +298,6 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"RuleBody"
 bbcode_enabled = true
-fit_content = true
 autowrap_mode = 2
 
 [node name="ChatWindow" type="Panel" parent="Windows"]
@@ -330,7 +344,8 @@ layout_mode = 2
 theme_type_variation = &"WindowTitle"
 text = "WORK — CHAT"
 
-[node name="Subtitle" type="Label" parent="Windows/ChatWindow/Titlebar/Row/Titles"]
+[node name="ChatSubtitle" type="Label" parent="Windows/ChatWindow/Titlebar/Row/Titles"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"WindowSubtitle"
 text = "TEO"

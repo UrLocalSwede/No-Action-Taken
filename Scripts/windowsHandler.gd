@@ -16,7 +16,7 @@ const TITLE_BAR := "Titlebar"
 const MIN_BUTTON := "Titlebar/Row/MinimizeButton"
 
 const EDGE := 14
-const MIN_SIZE := Vector2(520, 440)
+const MIN_SIZE := Vector2(560, 620)
 
 const GUTTER := 24.0
 const BAR_H := 56.0
