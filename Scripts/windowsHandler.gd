@@ -7,16 +7,25 @@ extends PanelContainer
 @onready var rule_icon = $HBoxContainer/RuleBtn
 @onready var review_icon = $HBoxContainer/QueueBtn
 @onready var chat_icon = $HBoxContainer/ChatBtn
+@onready var settings_icon = $HBoxContainer/SettingsBtn
+@onready var music_icon = $HBoxContainer/MusicBtn
 
 @onready var review_queue = $"../Windows/QueueWindow"
 @onready var rulebook = $"../Windows/RulebookWindow"
 @onready var chat_window = $"../Windows/ChatWindow"
+@onready var settings_window = $"../Windows/SettingsWindow"
+@onready var music_window = $"../Windows/MusicWindow"
 
 const TITLE_BAR := "Titlebar"
 const MIN_BUTTON := "Titlebar/Row/MinimizeButton"
 
 const EDGE := 14
+
+# Default floor for a window's size, and the floor the tiler works to. Windows
+# that want to be smaller than this say so at _register(); see _min_size.
 const MIN_SIZE := Vector2(560, 620)
+const SETTINGS_MIN := Vector2(520, 560)
+const MUSIC_MIN := Vector2(460, 520)
 
 const GUTTER := 24.0
 const BAR_H := 56.0
@@ -44,18 +53,38 @@ var _resize_dir := Vector2.ZERO
 var _start_rect := Rect2()
 var _start_mouse := Vector2.ZERO
 
-var _state := {}    # window -> State
-var _home := {}     # window -> position to fly back to
-var _tweens := {}   # window -> running Tween
-var _buttons := {}  # window -> taskbar button
+var _state := {}     # window -> State
+var _home := {}      # window -> position to fly back to
+var _tweens := {}    # window -> running Tween
+var _buttons := {}   # window -> taskbar button
+var _min_size := {}  # window -> smallest size the resize handles allow
+
+# Windows the tiler does not own. 584px per column (MIN_SIZE.x + GUTTER) means
+# three columns is the hard ceiling at 1080p -- a fourth lands at x=1920, and
+# because _layout_windows() also writes _home, clicking its taskbar tile would
+# tween it out there for good. These are centred once and float instead.
+var _floating: Array[Control] = []
 
 
 func _ready():
 	_register(review_queue, review_icon)
 	_register(rulebook, rule_icon)
 	_register(chat_window, chat_icon)
+	_register(settings_window, settings_icon, SETTINGS_MIN, true)
+	_register(music_window, music_icon, MUSIC_MIN, true)
 	_layout_windows()
+	_centre_floating()
 	_bring_to_front(review_queue)
+
+	# Changing the resolution in the Settings app changes the viewport, because
+	# the project runs with stretch mode disabled. Without this the three tiled
+	# windows would keep the old geometry until the next launch. The cost is
+	# that a resize forgets where the player dragged a tiled window to.
+	get_viewport().size_changed.connect(_on_viewport_resized)
+
+func _on_viewport_resized():
+	_layout_windows()
+	_clamp_floating()
 
 #-- Tiles the windows across whatever viewport we actually got.
 #   The offsets authored in the scene are design-time only; the game runs
@@ -65,6 +94,8 @@ func _layout_windows():
 	var cols := 3.0
 	var w: float = max((vp.x - GUTTER * (cols + 1.0)) / cols, MIN_SIZE.x)
 	var h: float = max(vp.y - BAR_H - GUTTER * 2.0, MIN_SIZE.y)
+	# cols is deliberately a literal and not order.size(): the tile width only
+	# works out for three. New windows float -- see _floating.
 	var order := [review_queue, rulebook, chat_window]
 	for i in order.size():
 		var win: Control = order[i]
@@ -72,9 +103,34 @@ func _layout_windows():
 		win.global_position = Vector2(GUTTER + (w + GUTTER) * i, GUTTER)
 		_home[win] = win.global_position
 
+#-- Floating windows open to the middle of the desktop, above the taskbar.
+#   Called once at startup, so a window the player has since dragged somewhere
+#   stays put; _clamp_floating() is what a later resize gets. --
+func _centre_floating():
+	var desk := get_viewport_rect().size - Vector2(0, BAR_H)
+	for win in _floating:
+		win.size = win.size.max(_min_size.get(win, MIN_SIZE))
+		win.global_position = ((desk - win.size) * 0.5).max(Vector2(GUTTER, GUTTER))
+		_home[win] = win.global_position
+
+#-- Drags a floating window back into view after the viewport shrank, without
+#   moving one that is already fully visible. --
+func _clamp_floating():
+	var desk := get_viewport_rect().size - Vector2(0, BAR_H)
+	for win in _floating:
+		var home: Vector2 = _home.get(win, win.global_position)
+		home.x = clampf(home.x, GUTTER, maxf(desk.x - win.size.x - GUTTER, GUTTER))
+		home.y = clampf(home.y, GUTTER, maxf(desk.y - win.size.y - GUTTER, GUTTER))
+		_home[win] = home
+		if _state.get(win, State.MINIMIZED) == State.OPEN:
+			win.global_position = home
+
 #-- Hooks a window up to its taskbar button and input handlers --
-func _register(win: Control, button: Button):
+func _register(win: Control, button: Button, min_size := MIN_SIZE, floating := false):
 	_buttons[win] = button
+	_min_size[win] = min_size
+	if floating:
+		_floating.append(win)
 	_state[win] = State.OPEN if win.visible else State.MINIMIZED
 	_home[win] = win.global_position
 	button.focus_mode = Control.FOCUS_NONE
@@ -264,16 +320,17 @@ func _input(event):
 			var delta = _active.get_global_mouse_position() - _start_mouse
 			var pos = _start_rect.position
 			var sz = _start_rect.size
+			var floor_size: Vector2 = _min_size.get(_active, MIN_SIZE)
 			if _resize_dir.x > 0:
-				sz.x = max(_start_rect.size.x + delta.x, MIN_SIZE.x)
+				sz.x = max(_start_rect.size.x + delta.x, floor_size.x)
 			elif _resize_dir.x < 0:
-				sz.x = max(_start_rect.size.x - delta.x, MIN_SIZE.x)
+				sz.x = max(_start_rect.size.x - delta.x, floor_size.x)
 				pos.x = _start_rect.position.x + (_start_rect.size.x - sz.x)
 
 			if _resize_dir.y > 0:
-				sz.y = max(_start_rect.size.y + delta.y, MIN_SIZE.y)
+				sz.y = max(_start_rect.size.y + delta.y, floor_size.y)
 			elif _resize_dir.y < 0:
-				sz.y = max(_start_rect.size.y - delta.y, MIN_SIZE.y)
+				sz.y = max(_start_rect.size.y - delta.y, floor_size.y)
 				pos.y = _start_rect.position.y + (_start_rect.size.y - sz.y)
 
 			_active.global_position = pos

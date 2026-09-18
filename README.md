@@ -28,16 +28,35 @@ You are graded on accuracy against the rulebook as written. Whether the rulebook
 
 ## Playing
 
-The whole game is a fake desktop. Three windows:
+The whole game is a fake desktop. Five windows:
 
 | Window | What it's for |
 |---|---|
 | **Review Queue** | The current case, and the command line you answer it with |
 | **Rule Book** | The rules in force this shift |
 | **Work — Chat** | Your coworker, Teo |
+| **Media** | The soundtrack: play/pause, skip, seek, shuffle, repeat |
+| **Settings** | Volumes, window mode, text speed, reset progress |
 
 Windows can be dragged by their titlebar, resized from any edge or corner, and
-minimised — either from the titlebar button or by clicking the taskbar tile.
+minimised — either from the titlebar button or by clicking the taskbar tile. The
+first three are tiled across the desktop on launch; Media and Settings start
+minimised and open centred, floating above them.
+
+The first time you launch, you pick a username. Clicking the password field fills
+it in for you — the company already has it. After that, CLOCK IN takes you
+straight to the desktop.
+
+### Your own soundtrack
+
+The game ships with a few tracks, and you can add your own. Drop `.mp3` or `.wav`
+files into a `Soundtracks` folder next to the executable, and they appear in the
+playlist next launch. The filename is the track title, so renaming a file
+retitles it. If the Media window finds nothing it lists the exact folders it
+looked in.
+
+Settings are also reachable from the main menu, since the music starts playing
+before you clock in.
 
 ### Commands
 
@@ -104,23 +123,33 @@ To export a build, use the `Windows Desktop` or `Linux` preset in `export_preset
 Assets/
   Backgrounds/   wallpaper
   Fonts/         IBM Plex Mono
-  PNGs/          taskbar + titlebar icons (colour originals and mono variants)
+  Music/         the soundtrack that ships with the game
+  PNGs/          taskbar + titlebar icons (colour originals and mono variants),
+                 slider grabbers
   Themes/        DefaultTheme.tres — the entire UI style lives here
 Scenes/
   MainMenu.tscn      boot screen
+  Login.tscn         first-launch sign-in
   case_review.tscn   the desktop
+  SettingsPanel.tscn the settings form, shared by the window and the menu overlay
+  MusicPanel.tscn    the media window's contents
 Scripts/
   caseHandler.gd     game loop: cases, verdicts, console, typing effect, autocomplete
   case_data.gd       all shift/rule/case content
   command_data.gd    the command registry: what exists, and from which shift
-  game_state.gd      autoload: current shift, flags, citations, save file
+  game_state.gd      autoload: current shift, flags, citations, username, save file
+  settings.gd        autoload: volumes, display mode, text speed — user://settings.cfg
+  music_player.gd    autoload: playlist, folder scan, playback that outlives a scene
   windowsHandler.gd  window manager: drag, resize, minimise animations, taskbar
+  settings_panel.gd  the settings form
+  music_panel.gd     the media window (a view only — MusicPlayer owns the state)
+  login.gd
   main_menu.gd
 shift-one.md       design doc for shift one
 shifts-two-to-ten.md  design doc for the rest
 ```
 
-Two things worth knowing before you change anything:
+A few things worth knowing before you change anything:
 
 - **All UI styling lives in `Assets/Themes/DefaultTheme.tres`**, as theme type
   variations. Style new UI by adding a variation and setting `theme_type_variation` on
@@ -129,6 +158,13 @@ Two things worth knowing before you change anything:
   editing that file only. Rules live once in `RULEBOOK` and shifts list the section
   numbers in force, so no rule text is ever restated. A case only needs the keys that
   matter to it — `CASE_DEFAULTS` supplies the rest.
+- **Settings live in `user://settings.cfg`, separately from `progress.cfg`.**
+  `GameState.reset()` rewrites the progress file wholesale and its version guard
+  discards it outright on a mismatch — neither should ever cost somebody their
+  volume settings.
+- **Only three windows tile.** `MIN_SIZE.x` is 560 with 24px gutters, so three
+  columns needs 1776px and a fourth will not fit at 1080p. New windows should
+  register with `floating = true` and be centred, not added to the tiler.
 - **Adding a command means editing `Scripts/command_data.gd`.** One table drives the
   dispatcher, the autocomplete ghost and `help` together, so they cannot drift apart.
   Set `unlock` to the first shift it should exist on.

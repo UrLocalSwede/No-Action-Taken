@@ -19,6 +19,13 @@ const SAVE_VERSION := 1
 
 var shift_number := 1
 
+# Whatever the player typed at the sign-in screen. Doubles as the first-launch
+# flag: main_menu sends you to Login while this is empty, which is idempotent
+# in a way shift_number is not -- caseHandler saves on entry to shift 1, so
+# shift_number == 1 is not proof of a fresh install. The company's own records
+# only ever call you MOD-4471; this is just what the account is named.
+var username := ""
+
 # Used as a set: flags[name] == true. Written by verdicts, read by content
 # gating in caseHandler._build_queue(). This is what makes the shift-one
 # Copse Lane promise payable in shift three.
@@ -87,6 +94,7 @@ func save() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("meta", "version", SAVE_VERSION)
 	cfg.set_value("progress", "shift_number", shift_number)
+	cfg.set_value("progress", "username", username)
 	cfg.set_value("progress", "flags", PackedStringArray(flags.keys()))
 	cfg.set_value("progress", "shift_results", shift_results)
 	cfg.set_value("progress", "case_log", case_log)
@@ -99,16 +107,18 @@ func load_progress() -> void:
 	if int(cfg.get_value("meta", "version", 0)) != SAVE_VERSION:
 		return                  # older layout: start clean rather than guess
 	shift_number = int(cfg.get_value("progress", "shift_number", 1))
+	username = String(cfg.get_value("progress", "username", ""))
 	flags.clear()
 	for f in cfg.get_value("progress", "flags", PackedStringArray()):
 		flags[String(f)] = true
 	shift_results = cfg.get_value("progress", "shift_results", [])
 	case_log = cfg.get_value("progress", "case_log", [])
 
-#-- Wipes progress. Wire this to a 'NEW ROTATION' menu button when there is
-#   one; nothing calls it yet. --
+#-- Wipes progress. Called by the RESET PROGRESS control in the Settings app,
+#   behind a two-step confirm. --
 func reset() -> void:
 	shift_number = 1
+	username = ""          # sends the next BEGIN SHIFT back through sign-in
 	flags.clear()
 	shift_results.clear()
 	case_log.clear()

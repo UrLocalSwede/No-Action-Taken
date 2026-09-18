@@ -534,15 +534,26 @@ func play_messages(msgs: Array) -> bool:
 		if my_id != typing_ids[chat_box]:
 			return false
 		# _skip_typing turns the gap into a rush rather than a skip, so pressing
-		# the verdict again while Teo talks feels like impatience.
-		await get_tree().create_timer(0.15 if _skip_typing else 1.2).timeout
+		# the verdict again while Teo talks feels like impatience. It is per-shift
+		# runtime state, NOT the text-speed preference -- Settings owns that.
+		await get_tree().create_timer(0.15 if _skip_typing else Settings.message_gap()).timeout
 	return my_id == typing_ids[chat_box]
 
 #-- Typing effect --
-func type_text(label, content, speed := 0.02):
+#   'speed' is seconds per character and every delay below is a multiple of it,
+#   so the one scalar drives the whole effect. A negative value means "whatever
+#   the player picked in Settings", which is how all three typing functions
+#   read the preference without any call site passing it down. --
+func type_text(label, content, speed := -1.0):
 	var my_id = _claim(label)
+	var per_char: float = Settings.type_speed() if speed < 0.0 else speed
 
 	label.text = content
+	# INSTANT is 0.0 s/char. Reveal and leave here, before the first await, so
+	# there is no window for another run to interleave and steal the claim.
+	if per_char <= 0.0:
+		label.visible_ratio = 1.0
+		return
 	label.visible_ratio = 0.0
 	var total = content.length()
 	var shown = 0
@@ -556,36 +567,41 @@ func type_text(label, content, speed := 0.02):
 		shown += 1
 		label.visible_ratio = float(shown) / total
 
-		var delay = speed
+		var delay = per_char
 		var ch = content[shown -1]
 
 		if ch in [".", "!", "?"]:
-			delay = speed * 12
+			delay = per_char * 12
 		elif ch in [",", ";", ":"]:
-			delay = speed * 6
+			delay = per_char * 6
 		elif randf() < 0.04:
-			delay = speed * randf_range(4.0, 9.0)
+			delay = per_char * randf_range(4.0, 9.0)
 		else:
-			delay = speed * randf_range(0.6, 1.5)
+			delay = per_char * randf_range(0.6, 1.5)
 
 		await get_tree().create_timer(delay).timeout
 
 	label.visible_ratio = 1.0
 
 #-- Typing effect that appends instead of replacing --
-func append_typed(label, content, speed := 0.02):
+func append_typed(label, content, speed := -1.0):
 	await _append_typed_as(label, _claim(label), content, speed)
 
 #-- The body of append_typed, running under a claim its caller already took.
 #   Lets a multi-message run hold one id across several appends, so a newer run
 #   cancels the whole sequence instead of just the message in flight. --
-func _append_typed_as(label, my_id: int, content, speed := 0.02):
+func _append_typed_as(label, my_id: int, content, speed := -1.0):
 	if my_id != typing_ids[label]:
 		return
+	var per_char: float = Settings.type_speed() if speed < 0.0 else speed
 
 	var existing = label.text
 	var full = existing + content
 	label.text = full
+
+	if per_char <= 0.0:
+		label.visible_ratio = 1.0
+		return
 
 	var shown = existing.length()
 	label.visible_ratio = float(shown) / full.length()
@@ -598,7 +614,7 @@ func _append_typed_as(label, my_id: int, content, speed := 0.02):
 			return
 		shown += 1
 		label.visible_ratio = float(shown) / full.length()
-		await get_tree().create_timer(speed * randf_range(0.6, 1.5)).timeout
+		await get_tree().create_timer(per_char * randf_range(0.6, 1.5)).timeout
 
 	label.visible_ratio = 1.0
 

@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://uc7yswq3t1fb" path="res://Assets/PNGs/icons8-terminal-30-mono.png" id="5_term"]
 [ext_resource type="Texture2D" uid="uid://ltv82rcrailu" path="res://Assets/PNGs/icons8-book-30-mono.png" id="6_book"]
 [ext_resource type="Texture2D" uid="uid://dqx78qpfpsgtk" path="res://Assets/PNGs/icons8-chat-30-mono.png" id="7_chat"]
+[ext_resource type="Texture2D" uid="uid://bcd70ytfuxmby" path="res://Assets/PNGs/icons8-settings-30-mono.png" id="8_gear"]
+[ext_resource type="Texture2D" uid="uid://dknx2nupxopqi" path="res://Assets/PNGs/icons8-music-30-mono.png" id="9_note"]
+[ext_resource type="PackedScene" path="res://Scenes/SettingsPanel.tscn" id="10_settings"]
+[ext_resource type="PackedScene" path="res://Scenes/MusicPanel.tscn" id="11_music"]
 
 [node name="CaseReview" type="Control"]
 layout_mode = 3
@@ -49,8 +53,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-; Window offsets below are design-time only: windowsHandler._layout_windows()
-; retiles all three to the real viewport on _ready().
+; Window offsets below are design-time only. On _ready() windowsHandler
+; retiles the first three across the real viewport and centres the last two:
+; three 560-wide columns is the arithmetic ceiling at 1080p, so Settings and
+; Music float above the desktop instead of joining the row. Both are authored
+; hidden -- _register() reads that as MINIMIZED and gives them an idle tile.
 
 [node name="QueueWindow" type="Panel" parent="Windows"]
 layout_mode = 1
@@ -399,6 +406,168 @@ keep_editing_on_text_submit = true
 caret_blink = true
 caret_blink_interval = 0.5
 
+[node name="SettingsWindow" type="Panel" parent="Windows"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 700.0
+offset_top = 160.0
+offset_right = 1220.0
+offset_bottom = 920.0
+theme_type_variation = &"WindowBody"
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/SettingsWindow"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_type_variation = &"WindowTitlebar"
+
+[node name="Row" type="HBoxContainer" parent="Windows/SettingsWindow/Titlebar"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Windows/SettingsWindow/Titlebar/Row"]
+self_modulate = Color(0.5686275, 0.6, 0.6509804, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("8_gear")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Titles" type="VBoxContainer" parent="Windows/SettingsWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/SettingsWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"WindowTitle"
+text = "SETTINGS"
+
+[node name="Subtitle" type="Label" parent="Windows/SettingsWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"WindowSubtitle"
+text = "WORKSTATION PREFERENCES"
+
+[node name="Spacer" type="Control" parent="Windows/SettingsWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MinimizeButton" type="Button" parent="Windows/SettingsWindow/Titlebar/Row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "—"
+
+[node name="Body" type="MarginContainer" parent="Windows/SettingsWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 74
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="SettingsPanel" parent="Windows/SettingsWindow/Body" instance=ExtResource("10_settings")]
+layout_mode = 2
+
+[node name="MusicWindow" type="Panel" parent="Windows"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 730.0
+offset_top = 270.0
+offset_right = 1190.0
+offset_bottom = 790.0
+theme_type_variation = &"WindowBody"
+
+[node name="Titlebar" type="PanelContainer" parent="Windows/MusicWindow"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_type_variation = &"WindowTitlebar"
+
+[node name="Row" type="HBoxContainer" parent="Windows/MusicWindow/Titlebar"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Windows/MusicWindow/Titlebar/Row"]
+self_modulate = Color(0.5686275, 0.6, 0.6509804, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("9_note")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Titles" type="VBoxContainer" parent="Windows/MusicWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Windows/MusicWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"WindowTitle"
+text = "MEDIA"
+
+[node name="Subtitle" type="Label" parent="Windows/MusicWindow/Titlebar/Row/Titles"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"WindowSubtitle"
+text = "LOCAL PLAYBACK"
+
+[node name="Spacer" type="Control" parent="Windows/MusicWindow/Titlebar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MinimizeButton" type="Button" parent="Windows/MusicWindow/Titlebar/Row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "—"
+
+[node name="Body" type="MarginContainer" parent="Windows/MusicWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 74
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MusicPanel" parent="Windows/MusicWindow/Body" instance=ExtResource("11_music")]
+layout_mode = 2
+
 [node name="Taskbar" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
@@ -442,4 +611,22 @@ size_flags_vertical = 4
 focus_mode = 0
 theme_type_variation = &"TaskbarButton"
 icon = ExtResource("7_chat")
+icon_alignment = 1
+
+[node name="MusicBtn" type="Button" parent="Taskbar/HBoxContainer"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TaskbarButton"
+icon = ExtResource("9_note")
+icon_alignment = 1
+
+[node name="SettingsBtn" type="Button" parent="Taskbar/HBoxContainer"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"TaskbarButton"
+icon = ExtResource("8_gear")
 icon_alignment = 1

@@ -17,7 +17,9 @@ config/icon="uid://bqev1vf87ql0"
 
 [autoload]
 
+Settings="*res://Scripts/settings.gd"
 GameState="*res://Scripts/game_state.gd"
+MusicPlayer="*res://Scripts/music_player.gd"
 
 [display]
 

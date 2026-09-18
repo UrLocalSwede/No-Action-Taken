@@ -1,0 +1,188 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/music_panel.gd" id="1_panel"]
+
+; TitlebarButton draws with no content margins -- it is meant for the flat 32px
+; square on a window titlebar -- so every transport button below carries an
+; explicit custom_minimum_size or it collapses onto its own text.
+
+[node name="MusicPanel" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+script = ExtResource("1_panel")
+
+[node name="NowPlaying" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="MusTitle" type="Label" parent="NowPlaying"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+text = "NOTHING QUEUED"
+clip_text = true
+
+[node name="MusStatus" type="Label" parent="NowPlaying"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "—"
+clip_text = true
+
+[node name="Seek" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="MusSeek" type="HSlider" parent="Seek"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Times" type="HBoxContainer" parent="Seek"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MusElapsed" type="Label" parent="Seek/Times"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatusLabel"
+text = "0:00"
+
+[node name="Spacer" type="Control" parent="Seek/Times"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MusDuration" type="Label" parent="Seek/Times"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatusLabel"
+text = "0:00"
+
+[node name="Transport" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="MusShuffle" type="Button" parent="Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 34)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+theme_type_variation = &"TitlebarButton"
+text = "SHUFFLE"
+clip_text = true
+
+[node name="GapLeft" type="Control" parent="Transport"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MusPrev" type="Button" parent="Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 34)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "<<"
+
+[node name="MusPlay" type="Button" parent="Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 34)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "PLAY"
+
+[node name="MusNext" type="Button" parent="Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 34)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = ">>"
+
+[node name="GapRight" type="Control" parent="Transport"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MusRepeat" type="Button" parent="Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 34)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"TitlebarButton"
+text = "REPEAT ALL"
+clip_text = true
+
+[node name="VolumeRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="VolumeRow"]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "VOLUME"
+
+[node name="MusVolume" type="HSlider" parent="VolumeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="MusVolumeValue" type="Label" parent="VolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "60%"
+horizontal_alignment = 2
+
+[node name="Rule" type="HSeparator" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MusListHeader" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SectionLabel"
+text = "PLAYLIST"
+
+[node name="MusEmpty" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatusLabel"
+text = "NO AUDIO FOUND."
+autowrap_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MusList" type="VBoxContainer" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2

@@ -1,0 +1,116 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" uid="uid://dahkg824btrlo" path="res://Assets/Themes/DefaultTheme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://Scripts/login.gd" id="2_login"]
+
+; Same kit as MainMenu.tscn: Backdrop, a 64px margin, a 560-wide column and
+; the Menu*/Status label variations. LineEdit is already fully themed, so the
+; two fields below need no styling of their own.
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_login")
+
+[node name="Backdrop" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Backdrop"
+
+[node name="Margin" type="MarginContainer" parent="Backdrop"]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="Root" type="VBoxContainer" parent="Backdrop/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Center" type="CenterContainer" parent="Backdrop/Margin/Root"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Form" type="VBoxContainer" parent="Backdrop/Margin/Root/Center"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Backdrop/Margin/Root/Center/Form"]
+layout_mode = 2
+theme_type_variation = &"MenuTitle"
+text = "SIGN IN"
+uppercase = true
+
+[node name="Subtitle" type="Label" parent="Backdrop/Margin/Root/Center/Form"]
+layout_mode = 2
+theme_type_variation = &"MenuSubtitle"
+text = "moderation console - credentials required"
+uppercase = true
+
+[node name="Rule" type="HSeparator" parent="Backdrop/Margin/Root/Center/Form"]
+layout_mode = 2
+
+[node name="UserLabel" type="Label" parent="Backdrop/Margin/Root/Center/Form"]
+layout_mode = 2
+theme_type_variation = &"SectionLabel"
+text = "USERNAME"
+
+[node name="UsernameField" type="LineEdit" parent="Backdrop/Margin/Root/Center/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "your.name"
+max_length = 24
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="PassLabel" type="Label" parent="Backdrop/Margin/Root/Center/Form"]
+layout_mode = 2
+theme_type_variation = &"SectionLabel"
+text = "PASSWORD"
+
+[node name="PasswordField" type="LineEdit" parent="Backdrop/Margin/Root/Center/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "click to retrieve"
+editable = false
+secret = true
+
+[node name="Gap" type="Control" parent="Backdrop/Margin/Root/Center/Form"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SignInButton" type="Button" parent="Backdrop/Margin/Root/Center/Form"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SIGN IN"
+alignment = 0
+
+[node name="BackButton" type="Button" parent="Backdrop/Margin/Root/Center/Form"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BACK"
+alignment = 0
+
+[node name="Status" type="Label" parent="Backdrop/Margin/Root"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StatusLabel"
+text = "CONNECTION SECURE"
+horizontal_alignment = 1
+uppercase = true

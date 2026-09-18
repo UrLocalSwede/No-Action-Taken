@@ -1,0 +1,231 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/settings_panel.gd" id="1_panel"]
+
+; The settings form on its own, so the desktop window and the main-menu
+; overlay instance the same thing. Every segmented row below is left EMPTY
+; here and filled by settings_panel.gd from the matching table in Settings --
+; authoring the buttons twice would let the two lists drift apart.
+
+[node name="SettingsPanel" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+script = ExtResource("1_panel")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Col" type="VBoxContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Audio" type="VBoxContainer" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Head" type="Label" parent="Scroll/Col/Audio"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SectionLabel"
+text = "AUDIO"
+
+[node name="MasterRow" type="HBoxContainer" parent="Scroll/Col/Audio"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Scroll/Col/Audio/MasterRow"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "MASTER"
+
+[node name="SetMasterSlider" type="HSlider" parent="Scroll/Col/Audio/MasterRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SetMasterValue" type="Label" parent="Scroll/Col/Audio/MasterRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "80%"
+horizontal_alignment = 2
+
+[node name="MusicRow" type="HBoxContainer" parent="Scroll/Col/Audio"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Scroll/Col/Audio/MusicRow"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "MUSIC"
+
+[node name="SetMusicSlider" type="HSlider" parent="Scroll/Col/Audio/MusicRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SetMusicValue" type="Label" parent="Scroll/Col/Audio/MusicRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "60%"
+horizontal_alignment = 2
+
+[node name="SfxRow" type="HBoxContainer" parent="Scroll/Col/Audio"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Scroll/Col/Audio/SfxRow"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "EFFECTS"
+
+[node name="SetSfxSlider" type="HSlider" parent="Scroll/Col/Audio/SfxRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SetSfxValue" type="Label" parent="Scroll/Col/Audio/SfxRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "70%"
+horizontal_alignment = 2
+
+[node name="Rule1" type="HSeparator" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Display" type="VBoxContainer" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Head" type="Label" parent="Scroll/Col/Display"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SectionLabel"
+text = "DISPLAY"
+
+[node name="ModeLabel" type="Label" parent="Scroll/Col/Display"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "WINDOW MODE"
+
+[node name="SetModeRow" type="HBoxContainer" parent="Scroll/Col/Display"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="ResLabel" type="Label" parent="Scroll/Col/Display"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "RESOLUTION"
+
+[node name="SetResRow" type="HBoxContainer" parent="Scroll/Col/Display"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="SetResNote" type="Label" parent="Scroll/Col/Display"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatusLabel"
+text = "APPLIES IN WINDOWED MODE"
+autowrap_mode = 2
+
+[node name="Rule2" type="HSeparator" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Console" type="VBoxContainer" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Head" type="Label" parent="Scroll/Col/Console"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SectionLabel"
+text = "CONSOLE"
+
+[node name="SpeedLabel" type="Label" parent="Scroll/Col/Console"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MetaLabel"
+text = "TEXT SPEED"
+
+[node name="SetSpeedRow" type="HBoxContainer" parent="Scroll/Col/Console"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Rule3" type="HSeparator" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Data" type="VBoxContainer" parent="Scroll/Col"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Head" type="Label" parent="Scroll/Col/Data"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"SectionLabel"
+text = "DATA"
+
+[node name="SetResetButton" type="Button" parent="Scroll/Col/Data"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "RESET PROGRESS"
+
+[node name="SetResetNote" type="Label" parent="Scroll/Col/Data"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatusLabel"
+text = "WIPES SHIFT PROGRESS AND YOUR SIGN-IN."
+autowrap_mode = 2

@@ -1,6 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://dahkg824btrlo"]
 
 [ext_resource type="FontFile" uid="uid://c7kxftwx4ma3k" path="res://Assets/Fonts/IBMPlexMono-Regular.ttf" id="1_mono"]
+[ext_resource type="Texture2D" uid="uid://bfpr6whirasls" path="res://Assets/PNGs/slider-grabber.png" id="2_grab"]
+[ext_resource type="Texture2D" uid="uid://bhdqucanxjb20" path="res://Assets/PNGs/slider-grabber-hl.png" id="3_grab_hl"]
+[ext_resource type="Texture2D" uid="uid://pey2kku8clb2" path="res://Assets/PNGs/slider-grabber-off.png" id="4_grab_off"]
 
 ; ---------------------------------------------------------------- fonts
 ; IBM Plex Mono ships Regular only. Synthesise the bold face so [b] in a
@@ -364,6 +367,43 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+; ---------------------------------------------------------------- sliders
+
+; A Slider track's height is content_margin_top + content_margin_bottom --
+; Slider::_draw() sizes the box from get_minimum_size(), so 3 + 3 is a 6px
+; rail. The fill boxes must use the same margins or the two disagree.
+[sub_resource type="StyleBoxFlat" id="SB_track"]
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.0627451, 0.07450981, 0.09803922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1882353, 0.20784314, 0.24705883, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SB_track_fill"]
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.29803923, 0.5529412, 0.9647059, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SB_track_fill_hl"]
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.42352942, 0.6392157, 0.972549, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [resource]
 default_font = ExtResource("1_mono")
 default_font_size = 16
@@ -424,6 +464,17 @@ HScrollBar/styles/scroll = SubResource("SB_scroll")
 HScrollBar/styles/grabber = SubResource("SB_grabber")
 HScrollBar/styles/grabber_highlight = SubResource("SB_grabber_hl")
 HScrollBar/styles/grabber_pressed = SubResource("SB_grabber_pressed")
+
+; The grabber is an icon, not a stylebox: with no texture here HSlider falls
+; back to Godot's stock light grey-blue circle.
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/icons/grabber = ExtResource("2_grab")
+HSlider/icons/grabber_highlight = ExtResource("3_grab_hl")
+HSlider/icons/grabber_disabled = ExtResource("4_grab_off")
+HSlider/styles/slider = SubResource("SB_track")
+HSlider/styles/grabber_area = SubResource("SB_track_fill")
+HSlider/styles/grabber_area_highlight = SubResource("SB_track_fill_hl")
 
 ScrollContainer/styles/panel = SubResource("SB_empty")
 
